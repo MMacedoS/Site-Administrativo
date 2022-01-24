@@ -23,7 +23,7 @@ Swal.fire({
 }).then((result) => {
   /* Read more about handling dismissals below */
   if (result.dismiss === Swal.DismissReason.timer) {
-    window.location='index.php';
+    window.location='index';
   }
 })
 }

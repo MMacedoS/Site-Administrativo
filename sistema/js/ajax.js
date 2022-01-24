@@ -32,7 +32,8 @@ function mudarStatus(id, ativar){
 
         success: function (mensagem) {
             if (mensagem.trim() == "Alterado com Sucesso") {
-                 window.location="index.php?pag=" + pag;
+                //  window.location="index.php?pag=" + pag;
+                window.location.reload();
             }else {
                  mensagemErroAtivar()
                 }               
@@ -64,7 +65,8 @@ $("#form").submit(function () {
                      mensagemSalvar();
                      
                      setTimeout(function(){
-                        window.location="index.php?pag=" + pag;
+                        // window.location="index.php?pag=" + pag;
+                        window.location.reload();
                     }, 500)
                      
                     
@@ -106,7 +108,7 @@ $("#form-excluir").submit(function () {
                 mensagemExcluir()
 
                  setTimeout(function(){
-                        window.location="index.php?pag=" + pag;
+                    window.location.reload();
                     }, 500)
                		
             } else {
@@ -223,7 +225,7 @@ $("#form-obs").submit(function () {
                     //$('#nome').val('');
                     //$('#cpf').val('');
                     $('#btn-fechar-obs').click();
-                     window.location="index.php?pag=" + pag;
+                    window.location.reload();
                 } else {
 
                     $('#mensagem-obs').addClass('text-danger')

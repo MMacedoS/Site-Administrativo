@@ -20,6 +20,10 @@ class HomeController extends Controller{
     {
         $this->mostrarView('index');
     }
+    public function verifica($id)
+    {
+        $this->mostrarView('verificaMembro');
+    }
 
     public function igrejas()
     {

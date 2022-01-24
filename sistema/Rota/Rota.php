@@ -9,8 +9,34 @@ class Rota
 
     public function run()
     {
+        $controller="LoginController";
+        $metodo="login";
+        $parametros=[];
+        
         if(isset($_GET['pag']))
         {
+            $url= $_GET['pag'];
+            
+            if(!empty($url))
+            {
+                $url=explode("/",$url);
+                $controller=$url[0]."Controller";
+                array_shift($url);
+
+                if(!empty($url) && isset($url[0]))
+                {
+                    $metodo=$url[0];
+                    array_shift($url);
+
+                    if(count($url)>0)
+                    {
+                        $parametros=$url;
+                    }
+                }else{
+                    $metodo="login";
+                    $parametros=[];
+                }
+            }
 
         }else
         {
@@ -26,7 +52,9 @@ class Rota
                 $metodo="Login";
                 $parametros=[];
             }
-        $control= new $control;
+        $control= new $controller;
+
+        call_user_func_array(array($control,$metodo),$parametros);
     }
 }
 

@@ -48,6 +48,8 @@ abstract class Conexao{
         $this->conexao = null;
     }
 
+  
+
 }
 
 ?>

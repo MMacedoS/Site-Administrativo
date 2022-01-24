@@ -1,0 +1,14 @@
+{
+    "name": "void/sistema",
+    "description": "igreja",
+    "authors": [
+        {
+            "name": "MMacedoS",
+            "email": "macedo.mauriciogen@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+		"chillerlan/php-qrcode": "dev-main"
+    }
+}

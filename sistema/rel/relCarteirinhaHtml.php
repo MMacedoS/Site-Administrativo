@@ -1,7 +1,17 @@
 <?php 
-require_once("../conexao.php"); 
+require_once("conexaoRel.php"); 
 
+
+// Realizamos a importação da biblioteca para gerar QR Code.
+
+require_once '../vendor/autoload.php';
+
+use chillerlan\QRCode\QRCode;
+//CARREGAR DOMPDF
 $id = $_GET['id'];
+
+$data = "http://$_SERVER[HTTP_HOST]/sisigreja/home/verifica/{$id}"; //inserindo a URL do iMasters
+
 
 $nome_sede = $nome_igreja_sistema;
 
@@ -72,9 +82,38 @@ $data_hoje = 'Emitida em: '. implode('/', array_reverse(explode('-', date('Y-m-d
 
 
 .imagem {
-width: 99%;
+    margin-top:0px;
+	position: absolute;
+width: 100%;
 }
 
+.imagem-2 {
+    margin-top:2px;
+	position: absolute;
+width: 100%;
+/* opacity: 0; */
+}
+
+
+
+.qr {
+position: relative;
+width:100%;
+height:200vh;
+border-radius:7px;
+}
+
+.area-qr{
+	position: fixed;
+    margin-top: 1.95 em;
+    width: 60%;
+    margin-left:5.82 em;    
+   
+}
+.imagem-qr {
+position: relative;
+width:80%;
+}
 
 .imagem-igreja {
 position: absolute;
@@ -84,29 +123,30 @@ margin-left: 10px;
 }	
 
 .nome-membro {
-position: absolute;
-margin-top: 52px;
-margin-left: 95px;
-color:#913610;
-font-size:9px;
-width:100%;
+	position: absolute;
+    margin-top: 60px;
+    margin-left: 150px;
+    color: #913610;
+    font-size: 9px;
+    width: 100%;
 
 }
 
 
 .imagem-membro {
+position: absolute;
 width:100%;
 height:100%;
 border-radius:7px;
 }	
 
 .area-foto{
-position: absolute;
-margin-top: 75px;
-width:65px;
-height:78px;
-margin-left: 15px;
-border-radius:7px;
+	position: absolute;
+    margin-top: 82px;
+    width: 70px;
+    height: 90px;
+    margin-left: 30px;
+    border-radius: 7px;
 }
 
 .nome-sede {
@@ -132,56 +172,57 @@ width:100%;
 
 
 .data-atual {
-position: absolute;
-margin-top: 154px;
-margin-left: 20px;
-color:#545454;
-font-size:5px;
-width:100%;
+    position: absolute;
+    margin-top: 172px;
+    margin-left: 37px;
+    color: #913610;
+    font-size: 5px;
+    width: 100%;
+
 
 }
 
 
 .cargo {
-position: absolute;
-margin-top: 84px;
-margin-left: 95px;
-color:#545454;
-font-size:8px;
-width:100%;
+    position: absolute;
+    margin-top: 92px;
+    margin-left: 152px;
+    color: #545454;
+    font-size: 8px;
+    width: 100%;
 
 }
 
 
 .congregacao {
-position: absolute;
-margin-top: 113px;
-margin-left: 95px;
-color:#545454;
-font-size:8px;
-width:100%;
+	position: absolute;
+    margin-top: 124px;
+    margin-left: 152px;
+    color: #545454;
+    font-size: 8px;
+    width: 100%;
 
 }
 
 
 .nascimento {
-position: absolute;
-margin-top: 143px;
-margin-left: 95px;
-color:#545454;
-font-size:8px;
-width:100%;
+	position: absolute;
+    margin-top: 155px;
+    margin-left: 154px;
+    color: #545454;
+    font-size: 8px;
+    width: 100%;
 
 }
 
 
 .cpf {
-position: absolute;
-margin-top: 143px;
-margin-left: 240px;
-color:#545454;
-font-size:8px;
-width:100%;
+    position: absolute;
+    margin-top: 156px;
+    margin-left: 243px;
+    color: #545454;
+    font-size: 8px;
+    width: 100%;
 }
 
 
@@ -193,28 +234,34 @@ width:100%;
 
 <body>
 
+<?php if($cabecalho_rel_img != 'Sim'){ ?>
+<div class="nome-sede"> <?php echo mb_strtoupper($nome_igreja); ?></div>
+<div class="dados-igreja"> <?php echo $dados_igreja; ?></div>
+<img class="imagem-igreja" src="<?= $url_imagens ?>/painel-igreja/img/igrejas/<?= $imagem_igreja ?>">
+<!-- <img class="imagem" src="<php echo $url_imagens ?>/painel-igreja/img/igrejas/carteirinha.jpeg"> -->
+<?php }else{ ?>
+<img class="imagem" src="<?= $url_imagens ?>/painel-igreja/img/igrejas/<?= $imagem_carteirinha ?>">
+<?php } ?>
+
 
 <div class="congregacao"> <?php echo mb_strtoupper($nome_igreja); ?></div>
-<div class="nome-membro"> <?php echo mb_strtoupper($nome); ?></div>
+<div class="nome-membro"> <?php echo substr(mb_strtoupper($nome),0,30); ?></div>
 <div class="cargo"> <?php echo mb_strtoupper($nome_cargo); ?></div>
 <div class="nascimento"> <?php echo $data_nasc; ?></div>
 <div class="cpf"><?php echo $cpf; ?> </div>
 <div class="data-atual"><?php echo $data_hoje; ?> </div>
 
 <div class="area-foto">
-<img class="imagem-membro" src="<?php echo $url_sistema ?>img/membros/<?php echo $foto ?>">
+<img class="imagem-membro" src="<?php echo $url_imagens ?>/painel-igreja/img/membros/<?php echo $foto ?>">
 </div>
 
+<div class="qr">
+<img class="imagem-2" src="<?= $url_imagens ?>/painel-igreja/img/igrejas/baseqr.jpg">
+<div class="area-qr">
+<img class="imagem-qr" src="<?=(new QRCode)->render($data)?>">
+</div>
 
-<?php if($cabecalho_rel_img != 'Sim'){ ?>
-<div class="nome-sede"> <?php echo mb_strtoupper($nome_igreja); ?></div>
-<div class="dados-igreja"> <?php echo $dados_igreja; ?></div>
-<img class="imagem-igreja" src="<?php echo $url_sistema ?>img/igrejas/<?php echo $imagem_igreja ?>">
-<img class="imagem" src="<?php echo $url_sistema ?>img/carteirinha.jpeg">
-<?php }else{ ?>
-<img class="imagem" src="<?php echo $url_sistema ?>img/igrejas/<?php echo $imagem_carteirinha ?>">
-<?php } ?>
-
+</div>
 
 </body>
 
