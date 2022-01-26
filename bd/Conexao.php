@@ -1,5 +1,6 @@
 <?php
 
+
 abstract class Conexao{
      /*Método construtor do banco de dados*/
      public function __construct(){}

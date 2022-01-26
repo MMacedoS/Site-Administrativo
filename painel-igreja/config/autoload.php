@@ -1,5 +1,8 @@
 <?php
 define('ROTA_GERAL',"http://$_SERVER[HTTP_HOST]".'/sisIgreja/sistema');
+
+
+
 spl_autoload_register(function($new){    
 $root=__ROOT__."/";
 

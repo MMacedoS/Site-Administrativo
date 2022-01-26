@@ -1,6 +1,4 @@
 <?php 
-require_once("../conexao.php");
-require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 
 $pagina = 'cultos';
@@ -12,9 +10,8 @@ $pagina = 'cultos';
 
 <div class="tabela bg-light">
 	<?php 
-
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	
+	$res = $this->getCultos($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -198,8 +195,8 @@ $pagina = 'cultos';
 
 
 
-	<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-	<script src="../js/ajax.js"></script>
+	<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+	<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 	<script type="text/javascript">

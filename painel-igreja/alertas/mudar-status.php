@@ -1,24 +1,22 @@
 <?php
-require_once("../../conexao.php");
+
 $pagina = 'alertas';
 $id = @$_POST['id'];
 $ativar = @$_POST['ativar'];
 
-$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$res = $this->getAlertas($id);
 $id_igreja =$res[0]['igreja'];
+$ativo =$res[0]['ativo'];
 
-if($ativar == 'Sim'){
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and ativo = 'Sim'");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+	$res = $this->getAlertasAtivo("Sim",$id_igreja);
 	$total_reg = count($res);
-	if($total_reg > 0){
+if($ativar == 'Sim' && $total_reg > 0){	
 		echo 'Nao é possível ter dois alertas ativos, desative um dos alertas para ativar este!';
 		exit();
-	}
+}else{
+		$res = $this->updateStatusAlertas($ativar,$id);
 }
 
-$query = $pdo->query("UPDATE $pagina SET ativo = '$ativar' where id = '$id'");
-
-echo 'Alterado com Sucesso';
+echo $res;
 ?>

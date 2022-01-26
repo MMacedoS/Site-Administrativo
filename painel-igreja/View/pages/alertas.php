@@ -1,6 +1,4 @@
 <?php 
-require_once("../conexao.php");
-require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 require_once("deslogar-secretario.php");
 $pagina = 'alertas';
@@ -17,8 +15,8 @@ $pagina = 'alertas';
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja'  order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $this->getAlertas($id_igreja);
+	
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -70,8 +68,8 @@ $pagina = 'alertas';
 						$tab = 'Inativo';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =$this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$nome_usu_cad = $res_con[0]['nome'];
 					}else{
@@ -89,7 +87,7 @@ $pagina = 'alertas';
 						<td class="esc"><?php echo $nome_usu_cad ?></td>
 						<td class="esc"><?php echo $tab ?></td>
 											
-						<td class="esc"><img src="../img/alertas/<?php echo $foto ?>" width="30px"></td>
+						<td class="esc"><img src="<?=ROTA_IGREJA?>/img/alertas/<?php echo $foto ?>" width="30px"></td>
 
 					
 						
@@ -274,8 +272,8 @@ $pagina = 'alertas';
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">
@@ -288,7 +286,7 @@ $pagina = 'alertas';
 				$('#link').val(link);
 				$('#data').val(data);
 				
-				$('#target').attr('src', '../img/alertas/' + foto);
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/alertas/' + foto);
 
 				$('#tituloModal').text('Editar Registro');
 				var myModal = new bootstrap.Modal(document.getElementById('modalForm'), {		});
@@ -311,7 +309,7 @@ $pagina = 'alertas';
 				$('#ativo-dados').text(ativo);
 				$('#usuario-dados').text(usuario);
 				
-				$('#foto-dados').attr('src', '../img/alertas/' + foto);
+				$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/alertas/' + foto);
 
 
 				var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
@@ -333,7 +331,7 @@ $pagina = 'alertas';
 				$('#data').val(data);
 
 			
-				$('#target').attr('src', '../img/alertas/sem-foto.jpg');
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/alertas/sem-foto.jpg');
 			}
 
 

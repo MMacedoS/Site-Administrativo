@@ -1,5 +1,7 @@
 <?php
- require_once IMAGEM."/config/autoload.php";
+foreach (glob("autoload.php") as $arquivo) {
+    require_once $arquivo;
+}
 
 class HomeModel extends Conexao
 {
@@ -147,6 +149,22 @@ class HomeModel extends Conexao
     return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getCultos($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM cultos where igreja = '$dados' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAlertas($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM alertas where igreja = '$dados' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getEventos($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM eventos where igreja = '$dados' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
 ?>

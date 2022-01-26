@@ -1,5 +1,8 @@
 <?php
- require_once "./config/autoload.php";
+foreach (glob("autoload.php") as $arquivo) {
+    require_once $arquivo;
+}
+//  require_once "./config/autoload.php";
 
 class Controller{
 

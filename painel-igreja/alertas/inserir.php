@@ -1,5 +1,4 @@
 <?php
-require_once("../../conexao.php");
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'alertas';
@@ -17,7 +16,7 @@ $igreja = $_POST['igreja'];
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['imagem']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/alertas/' .$nome_img;
+$caminho = IMAGEM.'\\img\\alertas\\' .$nome_img;
 if (@$_FILES['imagem']['name'] == ""){
 	$imagem = "sem-foto.jpg";
 }else{
@@ -36,36 +35,30 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET titulo = :titulo, descricao = :descricao, link = :link, usuario = '$id_usuario', data = '$data', igreja = '$igreja', ativo = 'Não', imagem = '$imagem'");
+	$query = $this->insertAlertas($titulo,$id_usuario,$data,$igreja,"Não",$imagem,$link,$descricao);
 	
 }else{
-	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, descricao = :descricao, link = :link, usuario = '$id_usuario', data = '$data', igreja = '$igreja', ativo = 'Sim' where id = '$id'");
-	}else{
 
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+		$res = $this->getAlertas($id);
 		$foto = $res[0]['imagem'];
 		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/alertas/'.$foto);	
+			@unlink(IMAGEM.'\\img\\alertas\\'.$foto);	
 		}
 
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, descricao = :descricao, link = :link, usuario = '$id_usuario', data = '$data', igreja = '$igreja', ativo = 'Sim', imagem = '$imagem' where id = '$id'");
+	if($imagem == "sem-foto.jpg"){
+		$query = $this->updateAlertas($titulo,$id_usuario,$data,$igreja,"Sim",$foto,$link,$descricao,$id);
+	}else{
+
+	
+		$query = $this->updateAlertas($titulo,$id_usuario,$data,$igreja,"Sim",$imagem,$link,$descricao,$id);
 	}
 	
 	
 }
 
 
-$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":link", "$link");
-$query->bindValue(":descricao", "$descricao");
 
-$query->execute();
-
-
-
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>

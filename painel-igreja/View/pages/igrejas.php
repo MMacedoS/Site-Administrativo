@@ -141,7 +141,7 @@ $pagina = 'igrejas';
 						<div class="col-md-4">
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Pastor Responsável</label>
-								<select class="form-control sel2" id="pastor" name="pastor" style="width:100%;" disabled>
+								<select class="form-control sel2" id="pastor" name="pastor" style="width:100%;" >
 									<?php 
 									
 									$res = $this->getPastores($id_igreja);

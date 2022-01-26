@@ -1,5 +1,4 @@
 <?php 
-require_once("../conexao.php");
 require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 $pagina = 'eventos';
@@ -16,8 +15,8 @@ $pagina = 'eventos';
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja'  order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+	$res = $this->getEventos($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -76,8 +75,8 @@ $pagina = 'eventos';
 						$tab = 'Inativo';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$nome_usu_cad = $res_con[0]['nome'];
 					}else{
@@ -101,7 +100,7 @@ $pagina = 'eventos';
 						<td class="esc"><?php echo $data_eventoF ?></td>
 						<td class="esc"><?php echo $nome_usu_cad ?></td>
 												
-						<td class="esc"><img src="../img/eventos/<?php echo $imagem ?>" width="30px"></td>
+						<td class="esc"><img src="<?=ROTA_IGREJA?>/img/eventos/<?php echo $imagem ?>" width="30px"></td>
 
 						<td class="d-none"><?php echo $tab ?></td>
 						
@@ -427,8 +426,8 @@ $pagina = 'eventos';
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">

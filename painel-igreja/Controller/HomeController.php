@@ -97,5 +97,18 @@ class HomeController extends Controller{
     {
         return $this->conHome->getPastoresById($id);
     }
+    public function getCultos($id)
+    {
+        return $this->conHome->getCultos($id);
+    }
+
+    public function getAlertas($id)
+    {
+        return $this->conHome->getAlertas($id);
+    }
+    public function getEventos($id)
+    {
+        return $this->conHome->getEventos($id);
+    }
 }
 ?>

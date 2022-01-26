@@ -1,5 +1,5 @@
 <?php
-  
+
  class CadastroController extends Controller{
 
     public $conCadastro;
@@ -113,7 +113,7 @@
         return $this->conCadastro->obsPastores($dados,$id);
     }
 
-    /////////tesoureiros
+    /////////fornecedor
 
     public function getFornecedores($dados)
     {
@@ -250,7 +250,7 @@
         return $this->conCadastro->deleteTesoureiros($dados);
     }  
 
-
+    // ;/////////usuarios
     public function usuarios($page)
     {
         // echo $page;die;
@@ -271,6 +271,8 @@
     {
         return $this->conCadastro->updateUsuarios($dados,$id);
     }  
+
+    // /////////tarefas
 
     public function insertTarefas($titulo,$descricao,$data,$hora,$igreja)
     {
@@ -318,6 +320,9 @@
         return $this->conCadastro->mudaStatusTarefas($dados,$id);
     }
 
+
+
+    // /////////igrejasw
     public function igrejas($page)
     {
         // echo $page;die;
@@ -326,12 +331,12 @@
                 require_once "igrejas/inserir.php";
                 // echo "inserir atualizar";
                 break;
-                case 'excluir.php':
-                    require_once "igrejas/excluir.php";
+                case 'listar-arquivos.php':
+                    require_once "igrejas/listar-arquivos.php";
                     break;
                   
-                    case 'mudar-status.php':
-                            require_once "igrejas/mudar-status.php";
+                    case 'imagens.php':
+                            require_once "igrejas/imagens.php";
                             break;
             
             default:
@@ -353,6 +358,117 @@
     public function updateIgreja($id,$nome,$telefone,$endereco,$video,$email,$imagem,$pastor)
     {
         return $this->conCadastro->updateIgreja($id,$nome,$telefone,$endereco,$video,$email,$imagem,$pastor);
+    }
+    
+
+    public function getVerificaDocumento($dados)
+    {
+        return $this->conCadastro->getVerificaDocumento($dados);
+    }
+    public function updateImagemIgreja($id,$logo,$cab_rel,$carteirinha)
+    {
+        return $this->conCadastro->updateImagemIgreja($id,$logo,$cab_rel,$carteirinha);
+    }
+
+    // ////////cultos
+
+    public function cultos($page)
+    {
+        // echo $page;die;
+        switch ($page) {
+            case 'inserir.php':
+                require_once "cultos/inserir.php";
+                // echo "inserir atualizar";
+                break;
+                case 'excluir.php':
+                    require_once "cultos/excluir.php";
+                    break;
+                    case 'obs.php':
+                        require_once "cultos/obs.php";
+                        break;
+                                      
+            default:
+                # code...
+                break;
+        }
+      
+    }
+
+    public function getCultosId($nome,$igreja)
+    {
+        return $this->conCadastro->getCultosId($nome,$igreja);
+    }
+  
+    public function insertCultos($descricao,$nome,$dia,$hora,$igreja)
+    {
+        return $this->conCadastro->insertCultos($descricao,$nome,$dia,$hora,$igreja);
+    }
+    public function updateCultos($descricao,$nome,$dia,$hora,$igreja,$id)
+    {
+        return $this->conCadastro->updateCultos($descricao,$nome,$dia,$hora,$igreja,$id);
+    }
+    public function updateObs($obs,$id)
+    {
+        return $this->conCadastro->updateObs($obs,$id);
+    }
+
+    public function deleteCultos($dados)
+    {
+        return $this->conCadastro->deleteCultos($dados);
+        
+    }
+// /////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////alerta 
+        public function alertas($page)
+        {
+            // echo $page;die;
+            switch ($page) {
+                case 'inserir.php':
+                    require_once "alertas/inserir.php";
+                    // echo "inserir atualizar";
+                    break;
+                    case 'excluir.php':
+                        require_once "alertas/excluir.php";
+                        break;
+                        case 'mudar-status.php':
+                            require_once "alertas/mudar-status.php";
+                            break;
+                       
+                                        
+                default:
+                    # code...
+                    break;
+            }
+        
+        }
+
+
+      
+    public function getAlertas($id)
+    {
+        return $this->conCadastro->getAlertas($id);
+    }
+    public function getAlertasAtivo($dados,$id)
+    {
+        return $this->conCadastro->getAlertasAtivo($dados,$id);
+    }
+    public function insertAlertas($titulo,$usuario,$data,$igreja,$ativo,$imagem,$link,$descricao)
+    {
+        return $this->conCadastro->insertAlertas($titulo,$usuario,$data,$igreja,$ativo,$imagem,$link,$descricao);
+    }
+    public function updateAlertas($titulo,$usuario,$data,$igreja,$ativo,$imagem,$link,$descricao,$id)
+    {
+        return $this->conCadastro->updateAlertas($titulo,$usuario,$data,$igreja,$ativo,$imagem,$link,$descricao,$id);
+    }
+    public function deleteAlertas($dados)
+    {
+        return $this->conCadastro->deleteAlertas($dados);
+        
+    }
+    public function updateStatusAlertas($dados,$id)
+    {
+        return $this->conCadastro->updateStatusAlertas($dados,$id);
+        
     }
     
 
