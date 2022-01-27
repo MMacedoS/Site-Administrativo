@@ -15,7 +15,8 @@ class HomeController extends Controller{
     public function getIgrejaId($id){
         return $this->conHome->getIgrejasAll($id);
     }
-    public function getUsuario($id){
+    public function getUsuario($id)
+    {
         return $this->conHome->getUser($id);
     }
 
@@ -110,5 +111,39 @@ class HomeController extends Controller{
     {
         return $this->conHome->getEventos($id);
     }
+    public function getFornecedoresId($id)
+    {
+        return $this->conHome->getFornecedoresId($id);
+    }
+    public function getFrequencia($dados)
+    {
+        return $this->conHome->getFrequencia($dados);
+    }
+    public function getFrequenciaAll()
+    {
+        return $this->conHome->getFrequenciaAll();
+    }
+    public function getContasApagar($id)
+    {
+        return $this->conHome->getContasApagar($id);
+    }
+    public function getReceberVencida($id_igreja)
+    {
+        return $this->conHome->getReceberVencida($id_igreja);
+    }
+    public function getReceberAll($id_igreja)
+    {
+        return $this->conHome->getReceberAll($id_igreja);
+    }
+    public function getMembrosId($membros)
+    {
+        return $this->conHome->getMembrosId($membros);
+    }
+    public function getDizimos($id)
+    {
+        return $this->conHome->getDizimos($id);
+    }
+    
+    
 }
 ?>

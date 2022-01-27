@@ -1,5 +1,5 @@
 <?php
-require_once("../../conexao.php");
+
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'receber';
@@ -15,24 +15,15 @@ $id = @$_POST['id'];
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET descricao = :descricao, membro = :membro, valor = :valor, data = curDate(), vencimento = :vencimento, usuario_cad = '$id_usuario', pago = 'Não', igreja = '$igreja'");
-
+	$query = $this->insertReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$pago,$igreja);
+	
 }else{
-	
-		$query = $pdo->prepare("UPDATE $pagina SET descricao = :descricao, membro = :membro, valor = :valor, vencimento = :vencimento, usuario_cad = '$id_usuario' where id = '$id'");
-	
+	$query = $this->updateReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$igreja,$id);
+		
 
 }
 
-
-	$query->bindValue(":descricao", "$descricao");
-	$query->bindValue(":membro", "$membro");
-	$query->bindValue(":valor", "$valor");
-	$query->bindValue(":vencimento", "$vencimento");
-	$query->execute();
-
-
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>

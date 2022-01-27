@@ -106,7 +106,7 @@ class HomeModel extends Conexao{
     public function noticias($id_igreja)
     {
         $con=Conexao::connect();
-        $query = $con->query("SELECT * FROM eventos where igreja = '$id_igreja' and tipo = 'noticias'  and ativo = 'Sim' order by data_evento desc, id desc limit 3");
+        $query = $con->query("SELECT * FROM eventos where igreja = '$id_igreja' and tipo = 'Noticia'  and ativo = 'Sim' order by data_evento desc, id desc limit 3");
 		$res = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
 

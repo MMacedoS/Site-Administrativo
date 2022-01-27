@@ -56,6 +56,12 @@ class HomeModel extends Conexao
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
     }
+    public function getContasApagar($id_igreja){
+       
+        $query = $this->igreja->query("SELECT * FROM pagar where igreja = '$id_igreja' order by pago asc, vencimento asc, id asc");
+        return $res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    }
     public function getPagVencidos($id_igreja){
        
         $query = $this->igreja->query("SELECT * FROM pagar where igreja = '$id_igreja' and vencimento < curDate() and pago != 'Sim'");
@@ -165,6 +171,46 @@ class HomeModel extends Conexao
         $query = $this->igreja->query("SELECT * FROM eventos where igreja = '$dados' order by id desc");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getFornecedoresId($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM fornecedores where id = '$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getMembrosId($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM membros where id = '$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getFrequencia($dados)
+    {    
+        $query = $this->igreja->query("SELECT * FROM frequencias where dias = '$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFrequenciaAll()
+    {    
+        $query = $this->igreja->query("SELECT * FROM frequencias order by id asc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getReceberVencida($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM receber where igreja = '$id_igreja' and vencimento < curDate() and pago != 'Sim' order by vencimento asc, id asc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getReceberAll($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM receber where igreja = '$id_igreja' order by pago asc, vencimento asc, id asc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getDizimos($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM dizimos where igreja = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
 
 }
 ?>

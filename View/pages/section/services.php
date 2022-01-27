@@ -40,7 +40,7 @@
 							</span>
 							
 							<span style="margin-left:15px">
-							<a href="evento/evento/<?php echo $url ?>">Veja Mais<i class="icon-arrow-right3"></i></a>
+							<a href="<?=ROTA_GERAL?>/evento/evento/<?php echo $url ?>">Veja Mais<i class="icon-arrow-right3"></i></a>
 						</span>
 						</div>
 					</div>

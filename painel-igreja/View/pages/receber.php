@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 $pagina = 'receber';
 require_once("deslogar-secretario.php");
@@ -9,21 +9,21 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 	$classe_hoje = 'text-dark';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and vencimento < curDate() and pago != 'Sim' order by vencimento asc, id asc");
+	$query = $this->getReceberVencida($id_igreja);
 
 }else if(@$_GET['filtrar'] == 'Hoje'){
 	$classe_vencidas = 'text-dark';
 	$classe_hoje = 'text-primary';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and vencimento = curDate() and pago != 'Sim' order by vencimento asc, id asc");
+	$query = $this->getReceber($id_igreja);
 
 }else{
 	$classe_vencidas = 'text-dark';
 	$classe_hoje = 'text-dark';
 	$classe_todas = 'text-primary';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by pago asc, vencimento asc, id asc");
+	$query = $this->getReceberAll($id_igreja);
 }
 
 
@@ -50,7 +50,7 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 
 <div class="tabela bg-light">
 	<?php 
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $query;
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -77,14 +77,14 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 						$descricao = $res[$i]['descricao'];
 					$membro = $res[$i]['membro'];
 					$valor = $res[$i]['valor'];
-					$vencimento = $res[$i]['vencimento'];
-					
+					$vencimento = $res[$i]['vencimento'];					
 					$pago = $res[$i]['pago'];
-
-					$usuario_cad = $res[$i]['usuario_cad'];
+					$usuario_cad = $res[$i]['usuario_cad'];					
 					$usuario_baixa = $res[$i]['usuario_baixa'];
 					$data_baixa = $res[$i]['data_baixa'];
 					$data = $res[$i]['data'];
+					$data= explode(" ",$data);
+					$data=implode("/",array_reverse(explode("-",$data[0])));
 					$igreja = $res[$i]['igreja'];
 					
 					$id = $res[$i]['id'];
@@ -115,16 +115,16 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$membro'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getMembrosId($membro);
 					if(count($res_con) > 0){
 						$nome_mem = $res_con[0]['nome'];
 					}else{
 						$nome_mem = 'Sem Membro';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_cad'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getUsuario($usuario_cad);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 						
@@ -133,8 +133,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_baixa'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =  $this->getUsuario($usuario_baixa);
 					if(count($res_con) > 0){
 						$usuario_baixa = $res_con[0]['nome'];
 					}else{
@@ -207,8 +207,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 									<select class="form-control sel2" id="membro" name="membro" style="width:100%;" required>
 										
 										<?php 
-										$query = $pdo->query("SELECT * FROM membros where igreja = '$id_igreja' order by id asc");
-										$res = $query->fetchAll(PDO::FETCH_ASSOC);
+										
+										$res = $this->getMembros($id_igreja);
 										$total_reg = count($res);
 										if($total_reg > 0){
 
@@ -376,8 +376,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">

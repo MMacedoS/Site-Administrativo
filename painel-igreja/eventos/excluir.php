@@ -1,18 +1,18 @@
 <?php
-require_once("../../conexao.php");
+
 $pagina = 'eventos';
 $id = @$_POST['id-excluir'];
 
 //excluir a imagem
-$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$res = $this->getEventos($id);
+
 $foto = $res[0]['imagem'];
 if($foto != "sem-foto.jpg"){
-	@unlink('../../img/eventos/'.$foto);	
+	@unlink(IMAGEM.'/img/eventos/'.$foto);	
 }
 
 
-$query = $pdo->query("DELETE FROM $pagina where id = '$id'");
+$query = $this->deleteEventos($id);
 
-echo 'Excluído com Sucesso';
+echo $query;
 ?>

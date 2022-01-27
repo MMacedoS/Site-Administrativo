@@ -20,11 +20,11 @@ $res = $this->noticias;
 				?>
 				<div class="col-md-4 animate-box">
 					<div class="events-entry">
-					<a href="#" class="img-holder"><img class="img-responsive" src="img/eventos/<?=$value['imagem']?>" alt="<?=$value['titulo']?>"></a>
+					<a href="#" class="img-holder"><img class="img-responsive" src="<?=ROTA_GERAL?>/painel-igreja/img/eventos/<?=$value['imagem']?>" alt="<?=$value['titulo']?>"></a>
 						<span class="date"><?php echo implode('/',array_reverse(explode("-",$value['data_evento'])));?></span>
 						<h3><a href="#"><?=$value['titulo']?></a></h3>
 						<p><?= $value['subtitulo']?></p>
-						<a href="#">leia mais <i class="icon-arrow-right3"></i></a>
+						<a href="<?=ROTA_GERAL?>/evento/evento/<?php echo $value['url'] ?>">leia mais <i class="icon-arrow-right3"></i></a>
 					</div>
 				</div>				
 				<?php  }?>

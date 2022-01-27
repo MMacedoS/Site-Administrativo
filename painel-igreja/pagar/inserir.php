@@ -1,5 +1,5 @@
 <?php
-require_once("../../conexao.php");
+
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'pagar';
@@ -19,7 +19,7 @@ $id = @$_POST['id'];
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['imagem']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/contas/' .$nome_img;
+$caminho = IMAGEM.'\\img\\contas\\' .$nome_img;
 if (@$_FILES['imagem']['name'] == ""){
 	$imagem = "sem-foto.jpg";
 }else{
@@ -38,21 +38,20 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET descricao = :descricao, fornecedor = :fornecedor, valor = :valor, data = curDate(), vencimento = :vencimento, usuario_cad = '$id_usuario', pago = 'Não', igreja = '$igreja', frequencia = :frequencia, arquivo = '$imagem'");
+	$query = $this->insertPagar($descricao,$fornecedor,$valor,$frequencia,$vencimento,$id_usuario,"Não",$igreja,$imagem);
 
 }else{
-	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET descricao = :descricao, fornecedor = :fornecedor, valor = :valor, vencimento = :vencimento, frequencia = :frequencia where id = '$id'");
-	}else{
-
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $this->getPagar($id);
 		$foto = $res[0]['arquivo'];
+		$pago = $res[0]['pago'];
 		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/contas/'.$foto);	
+			@unlink(IMAGEM.'\\img\\contas\\'.$foto);	
 		}
 
-		$query = $pdo->prepare("UPDATE $pagina SET descricao = :descricao, fornecedor = :fornecedor, valor = :valor, vencimento = :vencimento, frequencia = :frequencia, arquivo = '$imagem' where id = '$id'");
+	if($imagem == "sem-foto.jpg"){
+		$query = $this->updatePagar($id,$descricao,$fornecedor,$valor,$frequencia,$vencimento,$id_usuario,$pago,$igreja,$foto);
+	}else{
+		$query = $this->updatePagar($id,$descricao,$fornecedor,$valor,$frequencia,$vencimento,$id_usuario,$pago,$igreja,$imagem);
 	}
 	
 
@@ -60,15 +59,7 @@ if($id == "" || $id == 0){
 
 
 
-	$query->bindValue(":descricao", "$descricao");
-	$query->bindValue(":fornecedor", "$fornecedor");
-	$query->bindValue(":valor", "$valor");
-	$query->bindValue(":frequencia", "$frequencia");
-	$query->bindValue(":vencimento", "$vencimento");
-	$query->execute();
-
-
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>

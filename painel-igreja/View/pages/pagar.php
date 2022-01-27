@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 $pagina = 'pagar';
 require_once("deslogar-secretario.php");
@@ -9,21 +9,21 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 	$classe_hoje = 'text-dark';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and vencimento < curDate() and pago != 'Sim' order by vencimento asc, id asc");
+	$query = $this->getPagVencida($id_igreja);
 
 }else if(@$_GET['filtrar'] == 'Hoje'){
 	$classe_vencidas = 'text-dark';
 	$classe_hoje = 'text-primary';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and vencimento = curDate() and pago != 'Sim' order by vencimento asc, id asc");
+	$query = $this->getPagHoje($id_igreja);
 
 }else{
 	$classe_vencidas = 'text-dark';
 	$classe_hoje = 'text-dark';
 	$classe_todas = 'text-primary';
-
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by pago asc, vencimento asc, id asc");
+	$query = $this->getContasApagar($id_igreja);
+	// $query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by pago asc, vencimento asc, id asc");
 }
 
 
@@ -51,7 +51,7 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 <div class="tabela bg-light">
 	<?php 
 		
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $query;
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -126,16 +126,16 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM fornecedores where id = '$fornecedor'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getFornecedoresId($fornecedor);
 					if(count($res_con) > 0){
 						$nome_for = $res_con[0]['nome'];
 					}else{
 						$nome_for = 'Sem Fornecedor';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_cad'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getUsuario($usuario_cad);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 
@@ -144,8 +144,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_baixa'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					// $query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_baixa'");
+					$res_con =  $this->getUsuario($usuario_baixa);
 					if(count($res_con) > 0){
 						$usuario_baixa = $res_con[0]['nome'];
 					}else{
@@ -153,8 +153,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM frequencias where dias = '$frequencia'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getFrequencia($frequencia);
 					if(count($res_con) > 0){
 						$nome_fre = $res_con[0]['frequencia'];
 					}else{
@@ -178,8 +178,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 						<td class="esc"><?php echo $nome_fre ?></td>
 						
 						<td class="esc">
-							<a href="../img/contas/<?php echo $arquivo ?>" target="_blank">
-								<img src="../img/contas/<?php echo $tumb_arquivo ?>" width="30px">
+							<a href="<?=ROTA_IGREJA?>/img/contas/<?php echo $arquivo ?>" target="_blank">
+								<img src="<?=ROTA_IGREJA?>/img/contas/<?php echo $tumb_arquivo ?>" width="30px">
 							</a>
 						</td>
 
@@ -229,8 +229,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 									<select class="form-control sel2" id="fornecedor" name="fornecedor" style="width:100%;">
 										<option value="0">Selecionar Fornecedor</option>
 										<?php 
-										$query = $pdo->query("SELECT * FROM fornecedores where igreja = '$id_igreja' order by id asc");
-										$res = $query->fetchAll(PDO::FETCH_ASSOC);
+									
+										$res = $this->getFornecedores($id_igreja);
 										$total_reg = count($res);
 										if($total_reg > 0){
 
@@ -272,8 +272,8 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 										<label for="exampleFormControlInput1" class="form-label">Frequência</label>
 										<select class="form-control sel2" id="frequencia" name="frequencia" style="width:100%;">
 											<?php 
-											$query = $pdo->query("SELECT * FROM frequencias order by id asc");
-											$res = $query->fetchAll(PDO::FETCH_ASSOC);
+											
+											$res = $this->getFrequenciaAll();
 											$total_reg = count($res);
 											if($total_reg > 0){
 
@@ -299,7 +299,7 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 									</div>
 									<div class="col-md-2">
 										<div id="divImg" class="mt-4">
-											<img src="../img/contas/sem-foto.jpg"  width="100px" id="target">									
+											<img src="<?=ROTA_IGREJA?>/img/contas/sem-foto.jpg"  width="100px" id="target">									
 										</div>
 									</div>
 
@@ -437,8 +437,9 @@ if(@$_GET['filtrar'] == 'Vencidas'){
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">

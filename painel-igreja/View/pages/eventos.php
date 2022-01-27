@@ -106,7 +106,7 @@ $pagina = 'eventos';
 						
 						<td>
 							<big>
-								<a href="#" onclick="editar('<?php echo $id ?>', '<?php echo $titulo ?>', '<?php echo $subtitulo ?>', '<?php echo $descricao1 ?>', '<?php echo $descricao2 ?>', '<?php echo $descricao3 ?>', '<?php echo $data_evento ?>', '<?php echo $imagem ?>', '<?php echo $video ?>', '<?php echo $banner ?>', '<?php echo $tipo ?>', '<?php echo $pregador ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
+								<a href="#" onclick="editar('<?=@$id ?>', '<?=@$titulo ?>', '<?=@$subtitulo ?>', '<?=@$descricao1 ?>', '<?=@$descricao2 ?>', '<?=@$descricao3 ?>', '<?=@$data_evento ?>', '<?=@$imagem ?>', '<?=@$video ?>', '<?=@$banner ?>', '<?=@$tipo ?>', '<?=@$pregador ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
 
 								<a href="#" onclick="excluir('<?php echo $id ?>' , '<?php echo $titulo ?>')" title="Excluir Registro">	<i class="bi bi-trash text-danger"></i> </a>
 
@@ -183,10 +183,11 @@ $pagina = 'eventos';
 
 							<div class="col-md-3">
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Evento / Pregação</label>
+								<label for="exampleFormControlInput1" class="form-label">Evento / Pregação/Noticias</label>
 								<select class="form-select" id="tipo" name="tipo">
 									<option value="Evento">Evento</option>
 									<option value="Pregação">Pregação</option>
+									<option value="Noticia">Noticias</option>
 									</select>
 								</div>
 
@@ -445,8 +446,8 @@ $pagina = 'eventos';
 
 				$('#tipo').val(tipo).change();
 
-				$('#target').attr('src', '../img/eventos/' + imagem);
-				$('#targetBanner').attr('src', '../img/eventos/' + banner);
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + imagem);
+				$('#targetBanner').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + banner);
 
 				$('#tituloModal').text('Editar Registro');
 				var myModal = new bootstrap.Modal(document.getElementById('modalForm'), {		});
@@ -468,7 +469,7 @@ $pagina = 'eventos';
 				$('#obs-dados').text(obs);
 				$('#tipo-dados').text(tipo);
 				
-				$('#foto-dados').attr('src', '../img/eventos/' + imagem);
+				$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + imagem);
 				$('#video-dados').attr('src', video);
 
 				var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
@@ -514,8 +515,8 @@ $pagina = 'eventos';
 				$('#data_evento').val(data);
 
 				
-				$('#target').attr('src', '../img/eventos/sem-foto.jpg');
-				$('#targetBanner').attr('src', '../img/eventos/sem-foto.jpg');
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/eventos/sem-foto.jpg');
+				$('#targetBanner').attr('src', '<?=ROTA_IGREJA?>/img/eventos/sem-foto.jpg');
 			}
 
 

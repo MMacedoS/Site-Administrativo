@@ -1,5 +1,4 @@
 <?php
-require_once("../../conexao.php");
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'eventos';
@@ -34,7 +33,7 @@ $url = preg_replace('/[ -]+/' , '-' , $nome_novo);
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['imagem']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/eventos/' .$nome_img;
+$caminho = IMAGEM.'\\img\\eventos\\' .$nome_img;
 if (@$_FILES['imagem']['name'] == ""){
 	$imagem = "sem-foto.jpg";
 }else{
@@ -57,7 +56,7 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['banner']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/eventos/' .$nome_img;
+$caminho = IMAGEM.'\\img\\eventos\\' .$nome_img;
 if (@$_FILES['banner']['name'] == ""){
 	$banner = "sem-foto.jpg";
 }else{
@@ -76,90 +75,27 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, descricao3 = :descricao3, data_cad = curDate(), data_evento = '$data_evento', usuario = '$id_usuario', video = :video, ativo = 'Sim', igreja = '$igreja', imagem = '$imagem', tipo = '$tipo', banner = '$banner', url = '$url', pregador = :pregador");
-
-	$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":subtitulo", "$subtitulo");
-$query->bindValue(":descricao1", "$descricao1");
-$query->bindValue(":descricao2", "$descricao2");
-$query->bindValue(":descricao3", "$descricao3");
-$query->bindValue(":video", "$video");
-$query->bindValue(":pregador", "$pregador");
-
-$query->execute();
+	$query= $this->insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador);
 	
 }else{
-	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, descricao3 = :descricao3, data_cad = curDate(), data_evento = '$data_evento', usuario = '$id_usuario', video = :video, ativo = 'Sim', igreja = '$igreja', tipo = '$tipo', url = '$url', pregador = :pregador where id = '$id'");
-
-		$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":subtitulo", "$subtitulo");
-$query->bindValue(":descricao1", "$descricao1");
-$query->bindValue(":descricao2", "$descricao2");
-$query->bindValue(":descricao3", "$descricao3");
-$query->bindValue(":video", "$video");
-$query->bindValue(":pregador", "$pregador");
-
-$query->execute();
-
-
-	}else{
-
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
-		$foto = $res[0]['imagem'];
-		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/eventos/'.$foto);	
-		}
-
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, descricao3 = :descricao3, data_cad = curDate(), data_evento = '$data_evento', usuario = '$id_usuario', video = :video, ativo = 'Sim', igreja = '$igreja', imagem = '$imagem', tipo = '$tipo', url = '$url', pregador = :pregador where id = '$id'");
-
-		$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":subtitulo", "$subtitulo");
-$query->bindValue(":descricao1", "$descricao1");
-$query->bindValue(":descricao2", "$descricao2");
-$query->bindValue(":descricao3", "$descricao3");
-$query->bindValue(":video", "$video");
-$query->bindValue(":pregador", "$pregador");
-
-$query->execute();
-	}
-
-
-	if($banner == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, descricao3 = :descricao3, data_cad = curDate(), data_evento = '$data_evento', usuario = '$id_usuario', video = :video, ativo = 'Sim', igreja = '$igreja', tipo = '$tipo', url = '$url', pregador = :pregador where id = '$id'");
-
-		$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":subtitulo", "$subtitulo");
-$query->bindValue(":descricao1", "$descricao1");
-$query->bindValue(":descricao2", "$descricao2");
-$query->bindValue(":descricao3", "$descricao3");
-$query->bindValue(":video", "$video");
-$query->bindValue(":pregador", "$pregador");
-
-$query->execute();
-	}else{
-
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
-		$foto = $res[0]['banner'];
-		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/eventos/'.$foto);	
-		}
-
-		$query = $pdo->prepare("UPDATE $pagina SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, descricao3 = :descricao3, data_cad = curDate(), data_evento = '$data_evento', usuario = '$id_usuario', video = :video, ativo = 'Sim', igreja = '$igreja', banner = '$banner', tipo = '$tipo', url = '$url', pregador = :pregador where id = '$id'");
-
-		$query->bindValue(":titulo", "$titulo");
-$query->bindValue(":subtitulo", "$subtitulo");
-$query->bindValue(":descricao1", "$descricao1");
-$query->bindValue(":descricao2", "$descricao2");
-$query->bindValue(":descricao3", "$descricao3");
-$query->bindValue(":video", "$video");
-$query->bindValue(":pregador", "$pregador");
-
-$query->execute();
-	}
 	
+	$res = $this->getEventos($id);
+	$foto = $res[0]['imagem'];
+	if($foto != "sem-foto.jpg"){
+		@unlink(IMAGEM.'\\img\\eventos\\'.$foto);	
+	}
+
+	if($imagem == "sem-foto.jpg"){
+		$query = $pdo->updateEventos($titulo,$subtitulo,$descricao,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador,$id);
+
+
+
+	}else{
+
+		$query = $pdo->updateEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id);
+	}
+
+
 	
 }
 
@@ -168,7 +104,7 @@ $query->execute();
 
 
 
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>

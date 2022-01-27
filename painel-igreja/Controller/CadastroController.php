@@ -470,9 +470,195 @@
         return $this->conCadastro->updateStatusAlertas($dados,$id);
         
     }
-    
+// //////////////////////////////////////////////////////////////////eventyos/////////////
+///////////////////////////////////////////////////////////////////////////////////////
+public function getEventos($id)
+    {
+        return $this->conCadastro->getEventos($id);
+    }
+public function eventos($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "eventos/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "eventos/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "eventos/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
 
+}
+        public function deleteEventos($dados)
+        {
+            return $this->conCadastro->deleteEventos($dados);
+        }
+        public function obsEventos($dados,$id)
+        {
+            return $this->conCadastro->obsEventos($dados,$id);
+        }
+        public function mudaStatusEventos($dados,$id)
+        {
+            return $this->conCadastro->mudaStatusEventos($dados,$id);
+        }
+
+
+    public function insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
+    {
+        return $this->conCadastro->insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador);
+        
+    }
+    // ////////////////////////////////////pagar ////////////
+    ///////////////////////////////////////////////////////
+
+    public function getPagar($id)
+    {
+        return $this->conCadastro->getPagar($id);
+    }
+
+    public function updatePagar($id,$descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo)
+    {
+        return $this->conCadastro->updatePagar($id,$descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo);
+    }
+
+    public function insertPagar($descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo)
+    {
+        return $this->conCadastro->insertPagar($descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo);
+    }
     
+    public function pagar($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "pagar/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "pagar/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "pagar/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+
+public function deletePagar($dados)
+{
+    return $this->conCadastro->deletePagar($dados);
+}
+public function mudaStatusPagar($dados,$id)
+{
+    return $this->conCadastro->mudaStatusPagar($dados,$id);
+}
+public function insertMovimento($tipo,$movimento,$descricao,$valor,$id_usuario,$id_mov,$igreja)
+{
+    return $this->conCadastro->insertMovimento($tipo,$movimento,$descricao,$valor,$id_usuario,$id_mov,$igreja);
+}
+// ///////////////////////////receber///////////
+
+
+public function getReceber($id)
+{
+    return $this->conCadastro->getReceber($id);
+}
+
+public function receber($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "receber/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "receber/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "receber/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$pago,$igreja)
+{
+    return $this->conCadastro->insertReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$pago,$igreja);
+}
+public function updateReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$igreja,$id)
+{
+    return $this->conCadastro->updateReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$igreja,$id);
+}
+public function deleteReceber($dados)
+{
+    return $this->conCadastro->deleteReceber($dados);
+}
+public function mudaStatusReceber($dados,$id)
+{
+    return $this->conCadastro->mudaStatusReceber($dados,$id);
+}
+// ://///////////////////////////////dizimos
+
+public function dizimos($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "dizimos/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "dizimos/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "dizimos/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertDizimos($membro,$valor,$id_usuario,$igreja,$data)
+{
+    return $this->conCadastro->insertDizimos($membro,$valor,$id_usuario,$igreja);
+}
+public function updateDizimos($membro,$valor,$id_usuario,$igreja,$data,$id)
+{
+    return $this->conCadastro->updateDizimos($membro,$valor,$id_usuario,$igreja,$data,$id);
+}
+public function getMembrosId($dados)
+{
+    return $this->conCadastro->getMembrosId($dados);
+}
+
+public function deleteDizimo($dados)
+{
+    return $this->conCadastro->deleteDizimo($dados);
+}
+
+
 }
 
 

@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 require_once("deslogar-secretario.php");
 $pagina = 'dizimos';
@@ -12,8 +12,8 @@ $pagina = 'dizimos';
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	// $query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
+	$res = $this->getDizimos($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -37,25 +37,26 @@ $pagina = 'dizimos';
 
 						$valor = $res[$i]['valor'];	
 					$data = $res[$i]['data'];
+					$data=implode("/",array_reverse(explode("-",$data)));
 					$membro = $res[$i]['membro'];
 					$usuario = $res[$i]['usuario'];
 					
 					$id = $res[$i]['id'];
 
-					$dataF = implode('/', array_reverse(explode('-', $data)));
+					// $dataF = implode('/', array_reverse(explode('-', $data)));
 					$valorF = number_format($valor, 2, ',', '.');
 
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$membro'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					// $query_con = $pdo->query("SELECT * FROM membros where id = '$membro'");
+					$res_con = $this->getMembrosId($membro);
 					if(count($res_con) > 0){
 						$nome_membro = $res_con[0]['nome'];
 					}else{
 						$nome_membro = 'Não Informado';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					// $query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
+					$res_con = $this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 						$nivel_usuario = $res_con[0]['nivel'];
@@ -69,12 +70,12 @@ $pagina = 'dizimos';
 					<tr>
 						<td>R$ <?php echo $valorF ?></td>
 						<td class="esc"><?php echo $nome_membro ?></td>
-						<td class=""><?php echo $dataF ?></td>						
+						<td class=""><?php echo $data ?></td>						
 						<td class="esc"><?php echo $usuario_cad . ' <small>('. $nivel_usuario. ')</small>' ?></td>
 
 						<td>
 
-							<a href="#" onclick="editar('<?php echo $id ?>', '<?php echo $membro ?>', '<?php echo $valor ?>', '<?php echo $data ?>', '<?php echo $usuario ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
+							<a href="#" onclick="editar('<?php echo $id ?>', '<?php echo $membro ?>', '<?php echo $valor ?>', '<?php echo $res[$i]['data'] ?>', '<?php echo $usuario ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
 
 							<a href="#" onclick="excluir('<?php echo $id ?>' , '<?php echo $valor ?>')" title="Excluir Registro">	<i class="bi bi-trash text-danger"></i> </a>
 
@@ -121,8 +122,8 @@ $pagina = 'dizimos';
 						<select class="form-control sel2" id="membro" name="membro" style="width:100%;">
 							<option value="0">Selecionar Membro</option>
 							<?php 
-							$query = $pdo->query("SELECT * FROM membros order by id asc");
-							$res = $query->fetchAll(PDO::FETCH_ASSOC);
+							
+							$res = $this->getMembros($id_igreja);
 							$total_reg = count($res);
 							if($total_reg > 0){
 
@@ -133,8 +134,9 @@ $pagina = 'dizimos';
 									$cargo = $res[$i]['cargo'];
 									$id_reg = $res[$i]['id'];
 
-									$query_con = $pdo->query("SELECT * FROM cargos where id = '$cargo'");
-									$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+									
+									$res_con = $this->getCargoId($cargo);
+									var_dump($id_reg);
 									$nome_cargo = $res_con[0]['nome'];
 
 									?>
@@ -195,8 +197,8 @@ $pagina = 'dizimos';
 
 
 
-	<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-	<script src="../js/ajax.js"></script>
+	<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+	<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 	<script type="text/javascript">
@@ -212,10 +214,6 @@ $pagina = 'dizimos';
 			myModal.show();
 			$('#mensagem').text('');
 		}
-
-
-
-
 
 		function limpar(){
 			var data = "<?=$data_atual?>"

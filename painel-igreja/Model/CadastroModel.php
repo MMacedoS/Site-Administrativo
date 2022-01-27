@@ -720,6 +720,315 @@ public function updateStatusAlertas($dados,$id)
     
 }
 
+// //////////////////////////////////////////////////
+/////////////////////////////////eventos ///////////////
+
+public function insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
+{
+    $query = $this->instancia->prepare("INSERT INTO eventos SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, 
+	descricao3 = :descricao3, data_evento = :data_evento, usuario = :id_usuario, video = :video, ativo = :ativo,
+	 igreja = :igreja, imagem = :imagem, tipo = :tipo, banner = :banner, url = :url, pregador = :pregador");
+
+    $query->bindValue(":titulo", $titulo);
+    $query->bindValue(":subtitulo", $subtitulo);
+    $query->bindValue(":descricao1", $descricao1);
+    $query->bindValue(":descricao2", $descricao2);
+    $query->bindValue(":descricao3", $descricao3);
+    $query->bindValue(":data_evento", $data_evento);
+    $query->bindValue(":id_usuario", $id_usuario);
+    $query->bindValue(":igreja", $igreja);
+    $query->bindValue(":imagem", $imagem);
+    $query->bindValue(":tipo", $tipo);
+    $query->bindValue(":ativo", $ativo);
+    $query->bindValue(":banner", $banner);
+    $query->bindValue(":url", $url);
+    $query->bindValue(":video", $video);
+    $query->bindValue(":pregador", $pregador);
+    if($query->execute()){
+        echo 'Alterado com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+    
+}
+
+
+public function deleteEventos($dados)
+{
+    $query = $this->instancia->prepare("DELETE FROM eventos where id = :id");
+    $query->bindValue(":id",$dados,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Excluído com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+public function obsEventos($dados,$id)
+{
+    $query = $this->instancia->prepare("UPDATE eventos SET obs = :obs where id = :id");
+    $query->bindValue(":obs", $obs);
+    $query->bindValue(":id", $id);
+    if($query->execute())
+        {
+            return 'Salvo com Sucesso';
+        }else
+        {
+        return 'erro';
+        }
+}
+public function mudaStatusEventos($dados,$id)
+{
+    $query = $this->instancia->prepare("UPDATE eventos SET ativo=:ativo WHERE id = :id");
+    $query->bindValue(":id",$id,PDO::PARAM_INT);
+    $query->bindValue(":ativo",$dados,PDO::PARAM_STR);
+    if($query->execute()){
+        echo 'Alterado com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+
+public function getEventos($id)
+{
+    $query = $this->instancia->query("SELECT * FROM eventos where id = '$id'");
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+
+// ////////////////////////////////////////pagar//////////
+/////////////////////////////////////////////////////////
+
+
+public function getPagar($id)
+{
+    $query = $this->instancia->query("SELECT * FROM pagar where id = '$id'");
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+
+
+public function insertPagar($descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo)
+{
+    $query =  $this->instancia->prepare("INSERT INTO pagar SET descricao = :descricao, fornecedor = :fornecedor, valor = :valor,  
+	vencimento = :vencimento, usuario_cad = :usuario_cad, pago = :pago, igreja = :igreja, frequencia = :frequencia, arquivo = :arquivo");
+	$query->bindValue(":descricao", $descricao);
+	$query->bindValue(":fornecedor", $fornecedor);
+	$query->bindValue(":valor", $valor);
+	$query->bindValue(":frequencia", $frequencia);
+	$query->bindValue(":vencimento", $vencimento);
+	$query->bindValue(":usuario_cad", $usuario_cad);
+	$query->bindValue(":pago", $pago);
+	$query->bindValue(":igreja",$igreja);
+	$query->bindValue(":arquivo", $arquivo);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+
+public function updatePagar($id,$descricao,$fornecedor,$valor,$frequencia,$vencimento,$usuario_cad,$pago,$igreja,$arquivo)
+{
+    $query =  $this->instancia->prepare("UPDATE pagar SET descricao = :descricao, fornecedor = :fornecedor, valor = :valor,  
+	vencimento = :vencimento, usuario_cad = :usuario_cad, pago = :pago, igreja = :igreja, frequencia = :frequencia, arquivo = :arquivo WHERE id=:id");
+	$query->bindValue(":descricao", $descricao);
+	$query->bindValue(":fornecedor", $fornecedor);
+	$query->bindValue(":valor", $valor);
+	$query->bindValue(":frequencia", $frequencia);
+	$query->bindValue(":vencimento", $vencimento);
+	$query->bindValue(":usuario_cad", $usuario_cad);
+	$query->bindValue(":pago", $pago);
+	$query->bindValue(":igreja",$igreja);
+	$query->bindValue(":arquivo", $arquivo);
+    $query->bindValue(":id", $id);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+
+
+public function deletePagar($dados)
+{
+    $query = $this->instancia->prepare("DELETE FROM pagar where id = :id");
+    $query->bindValue(":id",$dados,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Excluído com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+public function mudaStatusPagar($id_usuario,$id)
+{
+    $query = $this->instancia->prepare("UPDATE pagar SET pago = 'Sim', usuario_baixa = :id_usuario, data_baixa = now() where id = :id");
+    $query->bindValue(":id",$id,PDO::PARAM_INT);
+    $query->bindValue(":id_usuario",$id_usuario,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Alterado com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+
+public function insertMovimento($tipo,$movimento,$descricao,$valor,$id_usuario,$id_mov,$igreja)
+{
+    $query =$this->instancia->prepare("INSERT INTO movimentacoes SET tipo = :tipo, movimento = :movimento, 
+    descricao = :descricao, valor = :valor, usuario = :usuario, id_mov = :id_mov, igreja = :igreja");
+	$query->bindValue(":tipo", $tipo);
+	$query->bindValue(":movimento", $movimento);
+	$query->bindValue(":descricao", $descricao);
+	$query->bindValue(":valor", $valor);
+	$query->bindValue(":usuario", $id_usuario);
+	$query->bindValue(":id_mov", $id_mov);
+	$query->bindValue(":igreja", $igreja);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+
+// /////////////////////////////////////////receber//////////////
+
+
+public function getReceber($id)
+{
+    $query = $this->instancia->query("SELECT * FROM receber where id = '$id'");
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+
+
+
+public function insertReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$pago,$igreja)
+{
+    $query = $this->instancia->prepare("INSERT INTO receber SET descricao = :descricao, membro = :membro, valor = :valor,
+	 vencimento = :vencimento, usuario_cad = :usuario, pago = :pago, igreja = :igreja");
+	$query->bindValue(":descricao", $descricao);
+	$query->bindValue(":membro", $membro);
+	$query->bindValue(":vencimento", $vencimento);
+	$query->bindValue(":valor", $valor);
+	$query->bindValue(":usuario", $id_usuario);
+	$query->bindValue(":pago", $pago);
+	$query->bindValue(":igreja", $igreja);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+public function updateReceber($descricao,$membro,$valor,$vencimento,$id_usuario,$igreja,$id)
+{
+    $query = $this->instancia->prepare("UPDATE receber SET descricao = :descricao, membro = :membro, valor = :valor,
+	 vencimento = :vencimento, usuario_cad = :usuario, igreja = :igreja where id=:id");
+	$query->bindValue(":descricao", $descricao);
+	$query->bindValue(":membro", $membro);
+	$query->bindValue(":vencimento", $vencimento);
+	$query->bindValue(":valor", $valor);
+	$query->bindValue(":usuario", $id_usuario);
+	$query->bindValue(":igreja", $igreja);    
+	$query->bindValue(":id", $id);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+
+public function deleteReceber($dados)
+{
+    $query = $this->instancia->prepare("DELETE FROM receber where id = :id");
+    $query->bindValue(":id",$dados,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Excluído com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+public function mudaStatusReceber($id_usuario,$id)
+{
+    $query = $this->instancia->prepare("UPDATE receber SET pago = 'Sim', usuario_baixa = :id_usuario, data_baixa = now() where id = :id");
+    $query->bindValue(":id",$id,PDO::PARAM_INT);
+    $query->bindValue(":id_usuario",$id_usuario,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Alterado com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+// ://///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+public function getMembrosId($dados)
+    {    
+        $query = $this->instancia->query("SELECT * FROM membros where id = '$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+public function insertDizimos($membro,$valor,$id_usuario,$igreja,$data)
+{
+    $query = $this->instancia->prepare("INSERT INTO dizimos SET membro =:membro,data=:data, valor = :valor, usuario = :usuario,igreja = :igreja");
+    $query->bindValue(":membro",$membro);
+    $query->bindValue(":valor",$valor);
+    $query->bindValue(":usuario",$id_usuario);    
+    $query->bindValue(":data",$data);
+    $query->bindValue(":igreja",$igreja);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+public function updateDizimos($membro,$valor,$id_usuario,$igreja,$data,$id)
+{
+    $query = $this->instancia->prepare("UPDATE dizimos SET membro =:membro, valor = :valor, data=:data, usuario = :usuario,igreja = :igreja WHERE id=:id");
+    $query->bindValue(":membro",$membro);
+    $query->bindValue(":valor",$valor);
+    $query->bindValue(":usuario",$id_usuario);
+    $query->bindValue(":igreja",$igreja);
+    $query->bindValue(":data",$data);
+    $query->bindValue(":id",$id);
+    if($query->execute())
+    {
+        return 'Salvo com Sucesso';
+    }else
+    {
+    return 'erro';
+    }
+}
+
+public function deleteDizimo($dados)
+{
+    $query = $this->instancia->prepare("DELETE FROM dizimos where id = :id");
+    $query->bindValue(":id",$dados,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Excluído com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+
+// ////////////////////////////////////
 
     private function getNewId($tabela){
         $sqlStmt = "SELECT MAX(id) AS id FROM {$tabela}";
