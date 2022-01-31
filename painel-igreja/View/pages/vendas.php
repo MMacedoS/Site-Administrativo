@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 $pagina = 'vendas';
 require_once("deslogar-secretario.php");
@@ -12,8 +12,9 @@ require_once("deslogar-secretario.php");
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	
+
+	$res = $this->getVendas($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -47,8 +48,7 @@ require_once("deslogar-secretario.php");
 
 
 					
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$res_con = $this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 						$nivel_usuario = $res_con[0]['nivel'];
@@ -164,8 +164,8 @@ require_once("deslogar-secretario.php");
 
 
 
-	<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-	<script src="../js/ajax.js"></script>
+	<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+	<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 	<script type="text/javascript">

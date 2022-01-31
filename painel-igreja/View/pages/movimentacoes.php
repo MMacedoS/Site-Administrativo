@@ -1,5 +1,4 @@
 <?php 
-require_once("../conexao.php");
 require_once("verificar.php");
 require_once("deslogar-secretario.php");
 $pagina = 'movimentacoes';
@@ -9,21 +8,21 @@ if(@$_GET['filtrar'] == 'Entradas'){
 	$classe_saidas = 'text-dark';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and tipo = 'Entrada' order by id desc");
+	$query = $this->getMovEntradas($id_igreja);
 
 }else if(@$_GET['filtrar'] == 'Saídas'){
 	$classe_entradas = 'text-dark';
 	$classe_saidas = 'text-primary';
 	$classe_todas = 'text-dark';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' and tipo = 'Saída' order by id desc");
+	$query = $this->getMovSaidas($id_igreja);
 
 }else{
 	$classe_entradas = 'text-dark';
 	$classe_saidas = 'text-dark';
 	$classe_todas = 'text-primary';
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja'  order by id desc");
+	$query = $this->getMovimentacaoes($id_igreja);
 }
 
 
@@ -46,7 +45,7 @@ if(@$_GET['filtrar'] == 'Entradas'){
 
 <div class="tabela bg-light">
 	<?php 
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $query;
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -89,8 +88,8 @@ if(@$_GET['filtrar'] == 'Entradas'){
 					
 
 					
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$query_con = $this->getUsuario($usuario);
+					$res_con = $query_con;
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 						
@@ -102,7 +101,8 @@ if(@$_GET['filtrar'] == 'Entradas'){
 										
 
 					$valorF = number_format($valor, 2, ',', '.');
-					$dataF = implode('/', array_reverse(explode('-', $data)));
+					$data=explode(" ",$data);
+					$dataF = implode('/', array_reverse(explode('-', $data[0])))." ". $data[1];
 					
 					?>			
 					<tr class="<?php echo $classe_linha ?>">
@@ -130,8 +130,8 @@ if(@$_GET['filtrar'] == 'Entradas'){
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>"</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		

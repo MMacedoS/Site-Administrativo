@@ -1,5 +1,4 @@
 <?php 
-require_once("../conexao.php");
 require_once("verificar.php");
 $pagina = 'patrimonios';
 require_once("deslogar-tesoureiro.php");
@@ -23,8 +22,8 @@ require_once("deslogar-tesoureiro.php");
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja_cad = '$id_igreja' or igreja_item = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	
+	$res = $this->getPatrimoniosItens($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -105,8 +104,8 @@ require_once("deslogar-tesoureiro.php");
 						$tab = 'Inativo';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_cad'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =$this->getUsuario($usuario_cad);
 					if(count($res_con) > 0){
 						$nome_usu_cad = $res_con[0]['nome'];
 					}else{
@@ -114,8 +113,8 @@ require_once("deslogar-tesoureiro.php");
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario_emprestou'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =$this->getUsuario($usuario_emprestou);
 					if(count($res_con) > 0){
 						$nome_usu_emp = $res_con[0]['nome'];
 					}else{
@@ -123,8 +122,8 @@ require_once("deslogar-tesoureiro.php");
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM igrejas where id = '$igreja_cad'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getIgrejaId($igreja_cad);
 					if(count($res_con) > 0){
 						$nome_ig_cad = $res_con[0]['nome'];
 					}else{
@@ -132,8 +131,8 @@ require_once("deslogar-tesoureiro.php");
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM igrejas where id = '$igreja_item'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getIgrejaId($igreja_item);
 					if(count($res_con) > 0){
 						$nome_ig_item = $res_con[0]['nome'];
 					}else{
@@ -158,7 +157,7 @@ require_once("deslogar-tesoureiro.php");
 						<td class="esc"><?php echo $data_cadF ?></td>
 						<td class="esc"><?php echo $nome_ig_cad ?></td>
 						
-						<td class="esc"><img src="../img/patrimonios/<?php echo $foto ?>" width="30px"></td>
+						<td class="esc"><img src="<?=ROTA_IGREJA?>/img/patrimonios/<?php echo $foto ?>" width="30px"></td>
 
 						<td class="d-none"><?php echo $tab ?></td>
 						
@@ -273,7 +272,7 @@ require_once("deslogar-tesoureiro.php");
 							</div>
 							<div class="col-md-2">
 								<div id="divImg" class="mt-4">
-									<img src="../img/patrimonios/sem-foto.jpg"  width="100px" id="target">									
+									<img src="<?=ROTA_IGREJA?>/img/patrimonios/sem-foto.jpg"  width="100px" id="target">									
 								</div>
 							</div>
 
@@ -500,8 +499,8 @@ require_once("deslogar-tesoureiro.php");
 						<label for="exampleFormControlInput1" class="form-label">Igreja</label>
 						<select class="form-control sel2" id="igreja" name="igreja" style="width:100%;" required>
 							<?php 
-							$query = $pdo->query("SELECT * FROM igrejas order by matriz desc, nome asc");
-							$res = $query->fetchAll(PDO::FETCH_ASSOC);
+							$res = $this->getIgrejas();	
+							// var_dump($res);						
 							$total_reg = count($res);
 							if($total_reg > 0){
 
@@ -571,8 +570,8 @@ require_once("deslogar-tesoureiro.php");
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">
@@ -586,7 +585,7 @@ require_once("deslogar-tesoureiro.php");
 				$('#data_cad').val(data_cad);
 				$('#doador').val(doador);
 				$('#entrada').val(entrada).change();
-				$('#target').attr('src', '../img/patrimonios/' + foto);
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/patrimonios/' + foto);
 
 				$('#tituloModal').text('Editar Registro');
 				var myModal = new bootstrap.Modal(document.getElementById('modalForm'), {		});
@@ -616,7 +615,7 @@ require_once("deslogar-tesoureiro.php");
 				$('#obs-dados').text(obs);
 				$('#entrada-dados').text(entrada);
 				$('#doador-dados').text(doador);
-				$('#foto-dados').attr('src', '../img/patrimonios/' + foto);
+				$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/patrimonios/' + foto);
 
 
 				var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
@@ -661,7 +660,7 @@ require_once("deslogar-tesoureiro.php");
 				document.getElementById("entrada").options.selectedIndex = 0;
 				$('#entrada').val($('#entrada').val()).change();
 
-				$('#target').attr('src', '../img/patrimonios/sem-foto.jpg');
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/patrimonios/sem-foto.jpg');
 			}
 
 

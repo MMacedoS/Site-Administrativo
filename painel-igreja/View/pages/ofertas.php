@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 $pagina = 'ofertas';
 require_once("deslogar-secretario.php");
@@ -11,9 +11,7 @@ require_once("deslogar-secretario.php");
 
 <div class="tabela bg-light">
 	<?php 
-
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $this->getOfertas($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -35,7 +33,7 @@ require_once("deslogar-secretario.php");
 				for($i=0; $i < $total_reg; $i++){
 					foreach ($res[$i] as $key => $value){} 
 
-						$valor = $res[$i]['valor'];	
+					$valor = $res[$i]['valor'];	
 					$data = $res[$i]['data'];
 					$membro = $res[$i]['membro'];
 					$usuario = $res[$i]['usuario'];
@@ -46,16 +44,16 @@ require_once("deslogar-secretario.php");
 					$valorF = number_format($valor, 2, ',', '.');
 
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$membro'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =   $this->getMembrosId($membro);
 					if(count($res_con) > 0){
 						$nome_membro = $res_con[0]['nome'];
 					}else{
 						$nome_membro = 'Não Informado';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con =  $this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 						$nivel_usuario = $res_con[0]['nivel'];
@@ -121,8 +119,8 @@ require_once("deslogar-secretario.php");
 						<select class="form-control sel2" id="membro" name="membro" style="width:100%;">
 							<option value="0">Selecionar Membro</option>
 							<?php 
-							$query = $pdo->query("SELECT * FROM membros order by id asc");
-							$res = $query->fetchAll(PDO::FETCH_ASSOC);
+							
+							$res = $this->getMembros($id_igreja);
 							$total_reg = count($res);
 							if($total_reg > 0){
 
@@ -133,8 +131,8 @@ require_once("deslogar-secretario.php");
 									$cargo = $res[$i]['cargo'];
 									$id_reg = $res[$i]['id'];
 
-									$query_con = $pdo->query("SELECT * FROM cargos where id = '$cargo'");
-									$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+									
+									$res_con = $this->getCargoId($cargo);
 									$nome_cargo = $res_con[0]['nome'];
 
 									?>
@@ -195,8 +193,8 @@ require_once("deslogar-secretario.php");
 
 
 
-	<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-	<script src="../js/ajax.js"></script>
+	<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+	<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 	<script type="text/javascript">

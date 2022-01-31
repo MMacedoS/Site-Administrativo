@@ -1,5 +1,4 @@
 <?php
-require_once("../../conexao.php");
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 
@@ -13,25 +12,13 @@ $id = @$_POST['id'];
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET descricao = '$descricao', valor = :valor, data = '$data', usuario = '$id_usuario', igreja = '$igreja'");
-
-	$query->bindValue(":valor", "$valor");
-	$query->execute();
-	$ult_id = $pdo->lastInsertId();
-
-	//INSIRO NAS MOVIMENTACOES
-$pdo->query("INSERT INTO movimentacoes SET tipo = 'Entrada', movimento = 'Venda', descricao = '$descricao', valor = '$valor', data = '$data', usuario = '$id_usuario', id_mov = '$ult_id', igreja = '$igreja'");
-
+	$query = $this->insertVendas($descricao,$valor,$id_usuario,$igreja,$data);
+	
 }else{
-	require_once("../verificar-tesoureiro.php");
-	$query = $pdo->prepare("UPDATE $pagina SET descricao = '$descricao', valor = :valor, data = '$data', usuario = '$id_usuario', igreja = '$igreja' where id = '$id'");
+	$query = $this->updateVendas($descricao,$valor,$id_usuario,$igreja,$data,$id);
+	
 
-	//INSIRO NAS MOVIMENTACOES
-$pdo->query("UPDATE movimentacoes SET descricao = '$descricao', valor = '$valor', data = '$data', usuario = '$id_usuario' where id_mov = '$id' and movimento = 'Venda'");
-
-
-$query->bindValue(":valor", "$valor");
-$query->execute();
+	
 
 }
 

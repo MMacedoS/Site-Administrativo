@@ -21,8 +21,8 @@ $igreja = $res[0]['igreja'];
 
 //INSIRO NAS MOVIMENTACOES
 // /////$pdo->query("INSERT INTO movimentacoes SET tipo = 'Entrada', movimento = 'Venda', descricao = '$descricao', valor = '$valor', data = curDate(), usuario = '$id_usuario', id_mov = '0', igreja = '$igreja'");
-if($query=="Alterado com Sucesso"){
-$query= $this->insertMovimento('Entrada',"Venda",$descricao,$valor,$id_usuario,0,$igreja);
-}
+// if($query=="Alterado com Sucesso"){
+// $query= $this->insertMovimento('Entrada',"Venda",$descricao,$valor,$id_usuario,0,$igreja);
+// }
 echo $query;
 ?>

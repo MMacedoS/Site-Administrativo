@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 $pagina = 'celulas';
@@ -12,8 +12,7 @@ $pagina = 'celulas';
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $this->getCelulas($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -51,8 +50,8 @@ $pagina = 'celulas';
 
 
 					//totalizar membros
-					$query2 = $pdo->query("SELECT * FROM celulas_membros where igreja = '$id_igreja' and celula = '$id'");
-					$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res2 = $this->getCelulasMembros($id_igreja,$id);
 					$membros_celula = count($res2);
 
 
@@ -63,24 +62,21 @@ $pagina = 'celulas';
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM pastores where id = '$pastor'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$res_con = $this->getPastoresById($pastor);
 					if(count($res_con) > 0){
 						$nome_pastor = $res_con[0]['nome'];
 					}else{
 						$nome_pastor = 'Nenhum';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$coordenador'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$res_con = $this->getMembrosId($coordenador);
 					if(count($res_con) > 0){
 						$nome_coordenador = $res_con[0]['nome'];
 					}else{
 						$nome_coordenador = 'Nenhum';
 					}
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$lider1'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$res_con = $this->getMembrosId($lider1);
 					if(count($res_con) > 0){
 						$nome_lider1 = $res_con[0]['nome'];
 					}else{
@@ -88,8 +84,7 @@ $pagina = 'celulas';
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM membros where id = '$lider2'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					$res_con = $this->getMembrosId($lider2);
 					if(count($res_con) > 0){
 						$nome_lider2 = $res_con[0]['nome'];
 					}else{
@@ -181,8 +176,8 @@ $pagina = 'celulas';
 								<select class="form-control sel21" id="pastor" name="pastor" style="width:100%;">
 									<option value="0">Selecione um Pastor</option>
 									<?php 
-									$query = $pdo->query("SELECT * FROM pastores where igreja = '$id_igreja' order by nome asc");
-									$res = $query->fetchAll(PDO::FETCH_ASSOC);
+									
+									$res = $this->getPastores($id_igreja);
 									$total_reg = count($res);
 									if($total_reg > 0){
 
@@ -209,8 +204,8 @@ $pagina = 'celulas';
 									<select class="form-control sel2" id="coordenador" name="coordenador" style="width:100%;">
 										<option value="0">Selecione um Membro</option>
 										<?php 
-										$query = $pdo->query("SELECT * FROM membros where igreja = '$id_igreja' and ativo = 'Sim' order by  nome asc");
-										$res = $query->fetchAll(PDO::FETCH_ASSOC);
+										
+										$res = $this->getMembrosAtivos($id_igreja);
 										$total_reg = count($res);
 										if($total_reg > 0){
 
@@ -233,8 +228,8 @@ $pagina = 'celulas';
 										<select class="form-control sel2" id="lider1" name="lider1" style="width:100%;">
 											<option value="0">Selecione um Membro</option>
 											<?php 
-											$query = $pdo->query("SELECT * FROM membros where igreja = '$id_igreja' and ativo = 'Sim' order by nome asc");
-											$res = $query->fetchAll(PDO::FETCH_ASSOC);
+										
+											$res = $this->getMembrosAtivos($id_igreja);
 											$total_reg = count($res);
 											if($total_reg > 0){
 
@@ -256,8 +251,8 @@ $pagina = 'celulas';
 											<select class="form-control sel2" id="lider2" name="lider2" style="width:100%;">
 												<option value="0">Selecione um Membro</option>
 												<?php 
-												$query = $pdo->query("SELECT * FROM membros where igreja = '$id_igreja' and ativo = 'Sim' order by nome asc");
-												$res = $query->fetchAll(PDO::FETCH_ASSOC);
+												
+												$res = $this->getMembrosAtivos($id_igreja);
 												$total_reg = count($res);
 												if($total_reg > 0){
 
@@ -455,8 +450,8 @@ $pagina = 'celulas';
 
 
 
-				<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-				<script src="../js/ajax.js"></script>
+				<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+				<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 				<script type="text/javascript">
@@ -614,7 +609,7 @@ $pagina = 'celulas';
 
 		
 		$.ajax({
-        url: pag + "/listar-membros.php",
+        url: "<?=ROTA_IGREJA?>Home/celulas/listar-membros.php",
         method: 'POST',
         data: {celula, igreja},
         dataType: "text",
@@ -633,7 +628,7 @@ $pagina = 'celulas';
 
 		
 		$.ajax({
-        url: pag + "/listar-membros-add.php",
+        url: "<?=ROTA_IGREJA?>Home/celulas/listar-membros-add.php",
         method: 'POST',
         data: {celula, igreja},
         dataType: "text",

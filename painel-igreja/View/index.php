@@ -8,7 +8,9 @@ require_once "componentes/cabecalho.php";
 
 	<div class="container-fluid mb-4 mx-4">
 		<?php 
-		require_once("pages/".$pag.'.php');
+			if(file_exists(IMAGEM."\View\\pages\\".$pag.".php")){
+				require_once(IMAGEM."\View\\pages\\".$pag.".php");
+			}
 		?>
 	</div>
 

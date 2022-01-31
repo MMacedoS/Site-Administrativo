@@ -658,9 +658,358 @@ public function deleteDizimo($dados)
     return $this->conCadastro->deleteDizimo($dados);
 }
 
+// /////////////////////////////////////////////////////////////
+
+
+public function ofertas($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "ofertas/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "ofertas/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "ofertas/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
 
 }
+public function insertOfertas($membro,$valor,$id_usuario,$igreja,$data)
+{
+    return $this->conCadastro->insertOfertas($membro,$valor,$id_usuario,$igreja,$data);
+}
+public function updateOfertas($membro,$valor,$id_usuario,$igreja,$data,$id)
+{
+    return $this->conCadastro->updateOfertas($membro,$valor,$id_usuario,$igreja,$data,$id);
+}
+
+public function deleteOfertas($dados)
+{
+    return $this->conCadastro->deleteOfertas($dados);
+}
+// /////////////////////////////////////////////////////////////
 
 
+public function doacoes($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "doacoes/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "doacoes/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "doacoes/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
 
+}
+public function insertDoacoes($membro,$valor,$id_usuario,$igreja,$data)
+{
+    return $this->conCadastro->insertDoacoes($membro,$valor,$id_usuario,$igreja,$data);
+}
+public function updateDoacoes($membro,$valor,$id_usuario,$igreja,$data,$id)
+{
+    return $this->conCadastro->updateDoacoes($membro,$valor,$id_usuario,$igreja,$data,$id);
+}
+
+public function deleteDoacoes($dados)
+{
+    return $this->conCadastro->deleteDoacoes($dados);
+}
+// ///////////////////////////////////////
+//  venda//////////////////////////
+
+
+public function vendas($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "vendas/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "vendas/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "vendas/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertVendas($descricao,$valor,$id_usuario,$igreja,$data)	
+{
+    return $this->conCadastro->insertVendas($descricao,$valor,$id_usuario,$igreja,$data);
+}
+public function updateVendas($descricao,$valor,$id_usuario,$igreja,$data,$id)
+{
+    return $this->conCadastro->updateVendas($descricao,$valor,$id_usuario,$igreja,$data,$id);
+}
+
+public function deleteVendas($dados)
+{
+    return $this->conCadastro->deleteVendas($dados);
+}
+
+// ///////////////////////////////////////
+//  documentos//////////////////////////
+
+public function getDocumentoId($dados)
+{
+    return $this->conCadastro->getDocumentoId($dados);
+}
+
+public function documentos($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "documentos/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "documentos/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "documentos/mudar-status.php";
+                    break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igreja)	
+{
+    return $this->conCadastro->insertDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igreja);
+}
+public function updateDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igreja,$id)
+{
+    return $this->conCadastro->updateDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igreja,$id);
+}
+
+public function deleteDocumentos($dados)
+{
+    return $this->conCadastro->deleteDocumentos($dados);
+}
+//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+public function getPatrimonios($dados)
+{
+    return $this->conCadastro->getPatrimonios($dados);
+}
+
+public function Patrimonios($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "patrimonios/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "patrimonios/excluir.php";
+                break;
+                case 'mudar-status.php':
+                    require_once "patrimonios/mudar-status.php";
+                    break;
+                    case 'obs.php':
+                        require_once "patrimonios/obs.php";
+                        break;
+                        case 'transferir.php':
+                            require_once "patrimonios/transferir.php";
+                            break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertPatrimonios($codigo,$nome,$descricao,$valor,$id_usuario,$data_cad,$igreja_cad,$igreja_item,$ativo,$entrada,$doador,$imagem)
+{
+    return $this->conCadastro->insertPatrimonios($codigo,$nome,$descricao,$valor,$id_usuario,$data_cad,$igreja_cad,$igreja_item,$ativo,$entrada,$doador,$imagem);
+}
+public function updatePatrimonios($codigo,$nome,$descricao,$valor,$entrada,$doador,$imagem,$id)
+{
+    return $this->conCadastro->updatePatrimonios($codigo,$nome,$descricao,$valor,$entrada,$doador,$imagem,$id);
+}
+
+public function deletePatrimonios($dados)
+{
+    return $this->conCadastro->deletePatrimonios($dados);
+}
+
+public function  mudarStatusPatrimonios($ativar,$id)
+{
+    return $this->conCadastro-> mudarStatusPatrimonios($ativar,$id);
+}
+
+public function obsPatrimonios($dados,$id)
+{
+    return $this->conCadastro->obsPatrimonios($dados,$id);
+}
+
+/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+public function celulas($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "celulas/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "celulas/excluir.php";
+                break;
+                case 'add-membros.php':
+                    require_once "celulas/add-membros.php";
+                    break;
+                    case 'excluir-membro.php':
+                        require_once "celulas/excluir-membro.php";
+                        break;
+                        case 'obs.php':
+                            require_once "celulas/obs.php";
+                            break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function getCelulas($nome,$igreja)
+{
+    return $this->conCadastro->getCelulas($nome,$igreja);
+}
+public function insertCelulas($nome,$dias,$hora,$local,$igreja,$pastor,$coordenador,$lider1,$lider2)
+{
+    return $this->conCadastro->insertCelulas($nome,$dias,$hora,$local,$igreja,$pastor,$coordenador,$lider1,$lider2);
+
+}
+public function updateCelulas($nome,$dias,$hora,$local,$pastor,$coordenador,$lider1,$lider2,$id)
+{
+    return $this->conCadastro->updateCelulas($nome,$dias,$hora,$local,$pastor,$coordenador,$lider1,$lider2,$id);
+}
+public function deleteCelulas($dados)
+{
+    return $this->conCadastro->deleteCelulas($dados);
+}
+public function deleteMembroCelulas($dados)
+{
+    return $this->conCadastro->deleteMembroCelulas($dados);
+}
+
+public function getCelulasMembrosId($igreja,$id_reg,$celula)
+{
+    return $this->conCadastro->getCelulasMembrosId($igreja,$id_reg,$celula);
+}
+public function addMembroCelulas($membro,$id,$igreja)
+{
+    return $this->conCadastro->addMembroCelulas($membro,$id,$igreja);
+}
+public function obsCelulas($dados,$id)
+{
+    return $this->conCadastro->obsCelulas($dados,$id);
+}
+/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+public function grupos($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "grupos/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "grupos/excluir.php";
+                break;
+                case 'add-membros.php':
+                    require_once "grupos/add-membros.php";
+                    break;
+                    case 'excluir-membro.php':
+                        require_once "grupos/excluir-membro.php";
+                        break;
+                        case 'obs.php':
+                            require_once "grupos/obs.php";
+                            break;
+               
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function getGrupos($nome,$igreja)
+{
+    return $this->conCadastro->getGrupos($nome,$igreja);
+}
+public function insertGrupos($nome,$dias,$hora,$local,$igreja,$pastor,$regente,$secretario,$tesoureiro,$lider1,$lider2)
+{
+    return $this->conCadastro->insertGrupos($nome,$dias,$hora,$local,$igreja,$pastor,$regente,$secretario,$tesoureiro,$lider1,$lider2);
+
+}
+public function updateGrupos($nome,$dias,$hora,$local,$pastor,$regente,$secretario,$tesoureiro,$lider1,$lider2,$id)
+{
+    return $this->conCadastro->updateGrupos($nome,$dias,$hora,$local,$pastor,$regente,$secretario,$tesoureiro,$lider1,$lider2,$id);
+}
+public function deleteGrupos($dados)
+{
+    return $this->conCadastro->deleteGrupos($dados);
+}
+public function deleteMembroGrupos($dados)
+{
+    return $this->conCadastro->deleteMembroGrupos($dados);
+}
+
+public function getGruposMembrosId($igreja,$id_reg,$celula)
+{
+    return $this->conCadastro->getGruposMembrosId($igreja,$id_reg,$celula);
+}
+public function addMembroGrupos($membro,$id,$igreja)
+{
+    return $this->conCadastro->addMembroGrupos($membro,$id,$igreja);
+}
+public function obsGrupos($dados,$id)
+{
+    return $this->conCadastro->obsGrupos($dados,$id);
+}
+
+}
 ?>

@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php");
+
 require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 
@@ -17,8 +17,8 @@ $pagina = 'documentos';
 
 <div class="tabela bg-light">
 	<?php 
-	$query = $pdo->query("SELECT * FROM $pagina where igreja = '$id_igreja' order by id desc");	
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	
+	$res = $this->getDocumentos($id_igreja);
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -59,13 +59,17 @@ $pagina = 'documentos';
 						$tumb_arquivo = 'rar.png';
 					}else if($ext == 'doc' || $ext == 'docx'){
 						$tumb_arquivo = 'word.png';
+					}elseif($ext=="xlsx"){
+						$tumb_arquivo = 'excel.png';
+					}elseif($ext=="pptx"){
+						$tumb_arquivo = 'powerpoint.png';
 					}else{
 						$tumb_arquivo = $arquivo;
 					}
 
 
-					$query_con = $pdo->query("SELECT * FROM usuarios where id = '$usuario'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getUsuario($usuario);
 					if(count($res_con) > 0){
 						$usuario_cad = $res_con[0]['nome'];
 
@@ -79,8 +83,8 @@ $pagina = 'documentos';
 						<td><?php echo $nome ?></td>
 						<td class="esc"><?php echo $descricao ?></td>
 						<td class="esc">
-							<a href="../img/documentos/<?php echo $arquivo ?>" target="_blank">
-								<img src="../img/documentos/<?php echo $tumb_arquivo ?>" width="30px">
+							<a href="<?=ROTA_IGREJA?>/img/documentos/<?php echo $arquivo ?>" target="_blank">
+								<img src="<?=ROTA_IGREJA?>/img/documentos/<?php echo $tumb_arquivo ?>" width="30px">
 							</a>
 						</td>
 						<td class="esc"><?php echo $dataF ?></td>
@@ -241,8 +245,8 @@ $pagina = 'documentos';
 
 
 
-		<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-		<script src="../js/ajax.js"></script>
+		<script type="text/javascript">var pag = "Cadastro/<?=$pagina?>";</script>
+		<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 		<script type="text/javascript">
@@ -252,7 +256,7 @@ $pagina = 'documentos';
 				$('#descricao').val(descricao);
 				$('#nome').val(nome);
 				$('#data').val(data);
-				$('#target').attr('src', '../img/documentos/' + arquivo);
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/documentos/' + arquivo);
 
 				
 				$('#tituloModal').text('Editar Registro');
@@ -269,7 +273,7 @@ $pagina = 'documentos';
 				$('#nome-dados').text(nome);
 				$('#data-dados').text(data);
 				$('#usuario-dados').text(usuario);
-				$('#foto-dados').attr('src', '../img/documentos/' + arquivo);
+				$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/documentos/' + arquivo);
 
 
 				var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
@@ -287,7 +291,7 @@ $pagina = 'documentos';
 				$('#descricao').val('');		
 				$('#nome').val('');
 				
-				$('#target').attr('src', '../img/documentos/sem-foto.jpg');
+				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/documentos/sem-foto.jpg');
 			}
 
 

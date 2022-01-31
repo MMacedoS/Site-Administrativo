@@ -1,11 +1,11 @@
 <?php 
-require_once("../../conexao.php");
+
 
 $celula = @$_POST['celula'];
 $igreja = @$_POST['igreja'];
 
-$query = $pdo->query("SELECT * FROM celulas_membros where igreja = '$igreja' and celula = '$celula' order by id desc");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$res = $this->getCelulasMembros($igreja,$celula);
 $total_reg = count($res);
 if($total_reg > 0){
 
@@ -15,8 +15,8 @@ if($total_reg > 0){
 			$membro = $res[$i]['membro'];
 			$data = $res[$i]['data'];
 			$dataF = implode('/', array_reverse(explode('-', $data)));
-			$query_con = $pdo->query("SELECT * FROM membros where id = '$membro'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+			
+					$res_con = $this->getMembrosId($membro);
 					if(count($res_con) > 0){
 						$nome_membro = $res_con[0]['nome'];
 					}

@@ -17,6 +17,12 @@ class HomeModel extends Conexao
         $query = $this->igreja->query("SELECT * FROM igrejas where id = '$id_igreja'");
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getIgrejas()
+    {
+        
+        $query = $this->igreja->query("SELECT * FROM igrejas order by matriz desc, nome");
+        return $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getUser($id_usuario)
     {
        
@@ -47,6 +53,13 @@ class HomeModel extends Conexao
     public function getMembros($id_igreja){
        
         $query = $this->igreja->query("SELECT * FROM membros where igreja = '$id_igreja' order by ativo desc");
+        return $res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        
+    }
+    public function getMembrosAtivos($id_igreja){
+       
+        $query = $this->igreja->query("SELECT * FROM membros where igreja = '$id_igreja' and ativo = 'Sim' order by  nome asc");
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
     }
@@ -80,9 +93,20 @@ class HomeModel extends Conexao
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
     }
+    public function gruposMembros($id_igreja,$id){
+        
+        $query = $this->igreja->query("SELECT * FROM grupos_membros where igreja = '$id_igreja' and grupo = '$id'");
+        return $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getCelulas($id_igreja){
        
         $query = $this->igreja->query("SELECT * FROM celulas where igreja = '$id_igreja'");
+        return $res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    public function getCelulasMembros($id_igreja,$id){
+       
+        $query = $this->igreja->query("SELECT * FROM celulas_membros where igreja = '$id_igreja' and celula = '$id'");
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
     }
@@ -120,6 +144,16 @@ class HomeModel extends Conexao
     {
        
         $query = $this->igreja->query("SELECT * FROM tesoureiros where igreja='$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getTesoureirosId($id)
+    {       
+        $query = $this->igreja->query("SELECT * FROM tesoureiros where id='$id'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getSecretariosId($id)
+    {       
+        $query = $this->igreja->query("SELECT * FROM secretarios where id='$id'");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -209,8 +243,62 @@ class HomeModel extends Conexao
         $query = $this->igreja->query("SELECT * FROM dizimos where igreja = '$id_igreja' order by id desc");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getOfertas($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM ofertas where igreja = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getDoacoes($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM doacoes where igreja = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    public function getVendas($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM vendas where igreja = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
     
+    public function getMovEntradas($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM movimentacoes where igreja = '$id_igreja' and tipo = 'Entrada' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getMovSaidas($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM movimentacoes where igreja = '$id_igreja' and tipo = 'Saída' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getMovimentacaoes($id_igreja)
+    {    
+        $query = $this->igreja->query("SELECT * FROM movimentacoes where igreja = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDocumentos($id_igreja)
+    {
+        $query = $this->igreja->query("SELECT * FROM documentos where igreja = '$id_igreja' order by id desc");	
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getPatrimoniosItens($id_igreja)
+    {
+        $query=$this->igreja->query("SELECT * FROM patrimonios where igreja_cad = '$id_igreja' or igreja_item = '$id_igreja' order by id desc");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+   
+    public function getCelulasMembrosId($igreja,$id_reg,$celula)
+    {
+        $query=$this->igreja->query("SELECT * FROM celulas_membros where igreja = '$igreja' and membro = '$id_reg' and celula = '$celula'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getGruposMembrosId($igreja,$id_reg,$celula)
+    {
+        $query=$this->igreja->query("SELECT * FROM grupos_membros where igreja = '$igreja' and membro = '$id_reg' and grupo = '$celula'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 
 }
 ?>

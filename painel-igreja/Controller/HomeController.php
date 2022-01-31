@@ -12,8 +12,25 @@ class HomeController extends Controller{
         $this->igrejas=$this->conHome->getIgrejasAll(3);       
         $this->mostrarIndex('index');
     }
+
+    public function celulas($igreja)
+    {
+        $this->mostrarCelulas($igreja);
+    }
+    
+    public function grupos($igreja)
+    {
+        $this->mostrargrupos($igreja);
+    }
+
+
+
     public function getIgrejaId($id){
         return $this->conHome->getIgrejasAll($id);
+    }
+    
+    public function getIgrejas(){
+        return $this->conHome->getIgrejas();
     }
     public function getUsuario($id)
     {
@@ -55,7 +72,14 @@ class HomeController extends Controller{
     {
         return $this->conHome->getCelulas($id);
     }
-    
+     public function getCelulasMembros($id_igreja,$id)
+    {
+        return $this->conHome->getCelulasMembros($id_igreja,$id);
+    }
+    public function getMembrosAtivos($id_igreja)
+    {
+        return $this->conHome->getMembrosAtivos($id_igreja);
+    }    
     public function getPatrimonios($id)
     {
         return $this->conHome->getPatrimonios($id);
@@ -80,6 +104,10 @@ class HomeController extends Controller{
     public function getSecretarios($id)
     {
         return $this->conHome->getSecretarios($id);
+    }
+    public function getSecretariosId($id)
+    {
+        return $this->conHome->getSecretariosId($id);
     }
     public function getFornecedores($id)
     {
@@ -143,7 +171,58 @@ class HomeController extends Controller{
     {
         return $this->conHome->getDizimos($id);
     }
-    
-    
+    public function getOfertas($id_igreja)
+    {
+        return $this->conHome->getOfertas($id_igreja);
+    }
+    public function getDoacoes($id_igreja)
+    {
+        return $this->conHome->getDoacoes($id_igreja);
+    }
+    public function getVendas($id_igreja)
+    {
+        return $this->conHome->getVendas($id_igreja);
+    }
+    public function getMovEntradas($id_igreja)
+    {
+        return $this->conHome->getMovEntradas($id_igreja);
+    }
+    public function getMovSaidas($id_igreja)
+    {
+        return $this->conHome->getMovSaidas($id_igreja);
+    }
+    public function getMovimentacaoes($id_igreja)
+    {
+        return $this->conHome->getMovimentacaoes($id_igreja);
+    }
+    public function getDocumentos($id_igreja)
+    {
+        return $this->conHome->getDocumentos($id_igreja);
+    }
+    public function getPatrimoniosItens($id_igreja)
+    {
+        return $this->conHome->getPatrimoniosItens($id_igreja);
+    }
+    public function getCelulasMembrosId($igreja,$id_reg,$celula)
+    {
+        return $this->conHome->getCelulasMembrosId($igreja,$id_reg,$celula);
+    }
+    public function getGrupos($id_igreja)
+    {
+        return $this->conHome->getGrupos($id_igreja);
+    }
+    public function gruposMembros($id_igreja,$id)
+    {
+        return $this->conHome->gruposMembros($id_igreja,$id);
+    }
+
+    public function getTesoureirosId($id)
+    {
+        return $this->conHome->getTesoureirosId($id);
+    }
+    public function getGruposMembrosId($igreja,$id_reg,$celula)
+    {
+        return $this->conHome->getGruposMembrosId($igreja,$id_reg,$celula);
+    }
 }
 ?>

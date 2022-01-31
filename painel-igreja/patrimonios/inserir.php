@@ -1,5 +1,5 @@
 <?php
-require_once("../../conexao.php");
+
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'patrimonios';
@@ -14,7 +14,8 @@ $data_cad = $_POST['data_cad'];
 
 $id = @$_POST['id'];
 $igreja = $_POST['igreja'];
-
+$igreja_cad=$igreja;
+$igreja_item=$igreja;
 if($entrada == 'Compra'){
 	if($valor == ''){
 		echo 'Preencha o Valor';
@@ -27,8 +28,8 @@ if($entrada == 'Compra'){
 	}
 }
 
-$query = $pdo->query("SELECT * FROM $pagina where codigo = '$codigo'");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$res = $this->getPatrimonios($codigo);
 $id_reg = @$res[0]['id'];
 $nome_item = @$res[0]['nome'];
 if(@count($res) > 0 and $id_reg != $id){
@@ -41,7 +42,7 @@ if(@count($res) > 0 and $id_reg != $id){
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['imagem']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/patrimonios/' .$nome_img;
+$caminho = IMAGEM.'\\img\\patrimonios\\' .$nome_img;
 if (@$_FILES['imagem']['name'] == ""){
 	$imagem = "sem-foto.jpg";
 }else{
@@ -60,38 +61,34 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET codigo = :codigo, nome = :nome, descricao = :descricao, valor = :valor, usuario_cad = '$id_usuario', data_cad = '$data_cad', igreja_cad = '$igreja', igreja_item = '$igreja', ativo = 'Sim', entrada = '$entrada', doador = :doador, foto = '$imagem'");
+
+	$query= $this->insertPatrimonios($codigo,$nome,$descricao,$valor,$id_usuario,$data_cad,$igreja_cad,$igreja_item,"Sim",$entrada,$doador,$imagem);
+
 	
 }else{
-	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET codigo = :codigo, nome = :nome, descricao = :descricao, valor = :valor,  entrada = '$entrada', doador = :doador where id = '$id'");
-	}else{
-
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res = $this->getPatrimonios($id);
 		$foto = $res[0]['foto'];
-		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/patrimonios/'.$foto);	
+		if($foto == "sem-foto.jpg"){
+			@unlink(IMAGEM.'\\img\\patrimonios\\'.$foto);
 		}
+		
+	if($imagem == "sem-foto.jpg"){
+		
 
-		$query = $pdo->prepare("UPDATE $pagina SET codigo = :codigo, nome = :nome, descricao = :descricao, valor = :valor,  entrada = '$entrada', doador = :doador, foto = '$imagem' where id = '$id'");
+		$query=$this->updatePatrimonios($codigo,$nome,$descricao,$valor,$entrada,$doadors,$foto,$id);
+	}else{
+		
+		
+		$query=$this->updatePatrimonios($codigo,$nome,$descricao,$valor,$entrada,$doador,$imagem,$id);
+		
 	}
 	
 	
 }
 
 
-$query->bindValue(":nome", "$nome");
-$query->bindValue(":codigo", "$codigo");
-$query->bindValue(":descricao", "$descricao");
-$query->bindValue(":valor", "$valor");
-$query->bindValue(":doador", "$doador");
 
-$query->execute();
-
-
-
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>
