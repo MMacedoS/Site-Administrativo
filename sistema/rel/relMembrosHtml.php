@@ -1,5 +1,5 @@
 <?php 
-require_once("../conexao.php"); 
+require_once("conexaoRel.php");
 
 $igreja = $_GET['igreja'];
 $status = $_GET['status'];
@@ -77,7 +77,7 @@ $cargo = '%'.$cargo.'%';
 <html>
 <head>
 	<title>Relatório de Membros</title>
-	<link rel="shortcut icon" href="../img/favicon.ico" />
+	<link rel="shortcut icon" href="<?=$url_imagens?>painel-igreja/img/favicon.ico" />
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 
@@ -211,7 +211,7 @@ $cargo = '%'.$cargo.'%';
 			
 			<div class="coluna titulo_cab" style="width:50%"> <u><?php echo $titulo_rel ?></u></div>		
 						
-			<div align="right" class="coluna" style="width:50%"> <img style="margin-top:5px" src="<?php echo $url_sistema ?>img/igrejas/<?php echo $imagem_igreja ?>" width="30px"> <?php echo mb_strtoupper($nome_igreja) ?></div>
+			<div align="right" class="coluna" style="width:50%"> <img style="margin-top:5px" src="<?php echo $url_imagens ?>painel-igreja/img/igrejas/<?php echo $imagem_igreja ?>" width="30px"> <?php echo mb_strtoupper($nome_igreja) ?></div>
 
 			
 		</div>
@@ -230,7 +230,7 @@ $cargo = '%'.$cargo.'%';
 		<div class="titulo_cab titulo_img"><u><?php echo $titulo_rel ?></u></div>	
 		<div class="data_img"><small> <small><small><?php echo mb_strtoupper($data_hoje) ?></small></small></small></div>
 
-		<img class="imagem" src="<?php echo $url_sistema ?>img/igrejas/<?php echo $cabecalho_rel ?>">
+		<img class="imagem" src="<?php echo $url_imagens ?>painel-igreja/img/igrejas/<?php echo $cabecalho_rel ?>">
 	<?php } ?>
 
 	<br>
@@ -288,7 +288,7 @@ $cargo = '%'.$cargo.'%';
 						<div class="coluna" style="width:20%"><?php echo $res[$i]['email'] ?></div>				
 						<div class="coluna" style="width:15%"><?php echo $res[$i]['telefone'] ?></div>
 						<div class="coluna" style="width:15%"><?php echo implode('/', array_reverse(explode('-', $res[$i]['data_cad']))) ?></div>				
-						<div class="coluna" style="width:10%"><img src="<?php echo $url_sistema ?>img/membros/<?php echo $res[$i]['foto'] ?>" width="30px"> </div>				
+						<div class="coluna" style="width:10%"><img src="<?php echo $url_imagens ?>/painel-igreja/img/membros/<?php echo $res[$i]['foto'] ?>" width="30px"> </div>				
 
 					</div>
 				</section>

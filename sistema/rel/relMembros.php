@@ -1,5 +1,7 @@
 <?php 
-require_once("../conexao.php");
+
+
+require_once("conexaoRel.php");
 
 $igreja = $_POST['igreja'];
 $status = $_POST['status'];
@@ -11,11 +13,10 @@ if($relatorio_pdf != 'Sim'){
 	echo $html;
 	exit();
 }
-
-//CARREGAR DOMPDF
 require_once '../dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
 
 header("Content-Transfer-Encoding: binary");
 header("Content-Type: image/png");
@@ -23,22 +24,26 @@ header("Content-Type: image/png");
 //INICIALIZAR A CLASSE DO DOMPDF
 $options = new Options();
 $options->set('isRemoteEnabled', true);
-$pdf = new DOMPDF($options);
+// $pdf = new DOMPDF($options);
+$dompdf = new Dompdf($options);
 
 
-//Definir o tamanho do papel e orientação da página
-$pdf->set_paper('A4', 'portrait');
+// //Definir o tamanho do papel e orientação da página
+$pdf->set_paper(array(0, 0, 841.89, 595.28)); // tamanho folha A4 (Paisagem)
+// $dompdf->set_paper(array(0, 0, 255.11, 138.73)); // tamanho folha 9x5 cm (Paisagem)
 
-//CARREGAR O CONTEÚDO HTML
-$pdf->load_html($html);
+
+// //CARREGAR O CONTEÚDO HTML
+$dompdf->load_html($html);
 
 //RENDERIZAR O PDF
-$pdf->render();
+$dompdf->render();
 
-//NOMEAR O PDF GERADO
-$pdf->stream(
-'membros.pdf',
+// //NOMEAR O PDF GERADO
+$dompdf->stream(
+	'membros.pdf',
 array("Attachment" => false)
 );
+
 
  ?>

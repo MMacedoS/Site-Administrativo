@@ -42,7 +42,7 @@ class Rota{
             $controller='HomeController';
             $metodo='index';
         }
-        $caminho='sisIgreja/Controller/'.$controller.'.php';
+        $caminho=ROTA_GERAL.'\Controller/'.$controller.'.php';
 
         if(!file_exists($caminho) && !method_exists($controller,$metodo))
         {

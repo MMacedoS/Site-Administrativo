@@ -87,7 +87,7 @@
 				<h5 class="modal-title" id="exampleModalLabel">Relatório de Membros</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form method="post" action="../rel/relMembros.php" target="_blank">
+			<form method="post" action="<?=ROTA?>/sistema/rel/relMembros.php" target="_blank">
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-4">
@@ -159,7 +159,7 @@
 				<h5 class="modal-title" id="exampleModalLabel">Relatório de Patrimônios</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form method="post" action="../rel/relPatrimonio.php" target="_blank">
+			<form method="post" action="<?=ROTA?>/sistema/rel/relPatrimonio.php" target="_blank">
 				<div class="modal-body">
 					<div class="row">
 
@@ -270,7 +270,7 @@
 									)</small></small></h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form method="post" action="../rel/relFinanceiro.php" target="_blank">
+			<form method="post" action="<?=ROTA?>/sistema/rel/relFinanceiro.php" target="_blank">
 				<div class="modal-body">
 					<div class="row">
 
