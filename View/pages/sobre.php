@@ -15,8 +15,8 @@
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-3 text-center slider-text">
                                     <div class="slider-text-inner">
-                                        <h1>About Us</h1>
-                                            <h2>Free html5 templates Made by <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></h2>
+                                        <h1>Sobre nós</h1>
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -28,20 +28,18 @@
 		<div id="fh5co-about">
 			<div class="row">
 				<div class="col-md-4">
-					<h3>Daily Verse</h3>
+					<h3>Versículo Diário</h3>
 					<blockquote class="dailyVerse">
-						<p>&ldquo;The LORD [is] my strength and my shield; my heart trusted in him, and I am helped: therefore my heart greatly rejoiceth; and with my song will I praise him.&rdquo;</p>
-						<span>Psalms 28:7</span>
+						<div id="dailyVersesWrapper"></div>
+						<script async defer src="https://dailyverses.net/get/verse.js?language=arc"></script>
 					</blockquote>
 				</div>
 				<div class="col-md-4">
-					<h3>Our Mission</h3>
-					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts</p>
-					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+					<h3>Nossa Missão</h3>
+					 <?=@$this->igrejas[0]['descricao']?>
 				</div>
 				<div class="col-md-4">
-					<h3>Our Ministries</h3>
+					<h3>Nossos Ministérios</h3>
 					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
 					<ul class="ministries-list">
 						<li><i class="icon-check"></i>Dignissimos asperiores vitae velit</li>
@@ -52,7 +50,7 @@
 				</div>
 			</div>
 		</div>
-        <?php require_once "section/membros.php";?>
+        <?php require_once "section/versos.php";?>
     </div>
 </div>
 <?php

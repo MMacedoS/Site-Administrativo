@@ -1,6 +1,6 @@
 <?php 
-require_once("../conexao.php");
-require_once("verificar.php");
+
+require_once("./verificar.php");
 $pagina = 'igrejas';
 ?>
 
@@ -11,8 +11,8 @@ $pagina = 'igrejas';
 <div class="tabela bg-light">
 	<?php 
 
-	$query = $pdo->query("SELECT * FROM $pagina order by id desc");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	
+	$res = $this->getIgrejasAll();
 	$total_reg = count($res);
 	if($total_reg > 0){
 
@@ -57,8 +57,8 @@ $pagina = 'igrejas';
 					$cab_rel = $res[$i]['cab_rel'];
 					$carteirinha_rel = $res[$i]['carteirinha_rel'];
 
-					$query_con = $pdo->query("SELECT * FROM pastores where id = '$pastor'");
-					$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+					
+					$res_con = $this->getPastoresId($pastor);
 					if(count($res_con) > 0){
 						$nome_p = $res_con[0]['nome'];
 					}else{
@@ -66,8 +66,8 @@ $pagina = 'igrejas';
 					}
 
 
-					$query_m = $pdo->query("SELECT * FROM membros where igreja = '$id'");
-			$res_m = $query_m->fetchAll(PDO::FETCH_ASSOC);
+					
+			$res_m = $this->getMembrosIdIgreja($id);
 			$membrosCad = @count($res_m);
 
 
@@ -83,7 +83,7 @@ $pagina = 'igrejas';
 						<td class="esc"><?php echo $data_cadF ?></td>
 						<td class="esc"><?php echo $membrosCad ?> Membros</td>
 						<td class="esc"><?php echo $nome_p ?></td>
-						<td class="esc"><img src="../img/igrejas/<?php echo $foto ?>" width="30px"></td>
+						<td class="esc"><img src="<?=ROTA?>/painel-igreja/img/igrejas/<?php echo $foto ?>" width="30px"></td>
 						
 						<td>
 							<big>
@@ -150,8 +150,8 @@ $pagina = 'igrejas';
 								<label for="exampleFormControlInput1" class="form-label">Pastor Responsável</label>
 								<select class="form-control sel2" id="pastor" name="pastor" style="width:100%;">
 									<?php 
-									$query = $pdo->query("SELECT * FROM pastores order by nome asc");
-									$res = $query->fetchAll(PDO::FETCH_ASSOC);
+									
+									$res = $this->getPastores();
 									$total_reg = count($res);
 									if($total_reg > 0){
 
@@ -484,8 +484,8 @@ $pagina = 'igrejas';
 
 
 
-<script type="text/javascript">var pag = "<?=$pagina?>"</script>
-<script src="../js/ajax.js"></script>
+<script type="text/javascript">var pag = "<?=$pagina?>";</script>
+<script src="<?=ROTA_JS?>/ajax.js"></script>
 
 
 <script type="text/javascript">

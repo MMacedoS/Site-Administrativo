@@ -38,7 +38,7 @@ class LoginController extends Controller
     {     
         switch ($usuarionivel) {
             case 'bispo':
-                header('Location:'.ROTA_PAINEL.'/painel-igreja');
+                header('Location:'.ROTA_PAINEL.'/painel-admin');
                 break;
             
                 case 'pastor':

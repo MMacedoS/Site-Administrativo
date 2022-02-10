@@ -66,7 +66,7 @@ $("#form").submit(function () {
                      
                      setTimeout(function(){
                         // window.location="index.php?pag=" + pag;
-                        window.location.reload();
+                        // window.location.reload();
                     }, 500)
                      
                     

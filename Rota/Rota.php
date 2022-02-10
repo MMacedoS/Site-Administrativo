@@ -19,7 +19,7 @@ class Rota{
         {
            
             $url=explode('/',$url);
-            $controller=$url[0].'Controller';
+            $controller=ucfirst($url[0].'Controller');
             array_shift($url);
            
            

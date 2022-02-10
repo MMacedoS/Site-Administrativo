@@ -100,7 +100,7 @@
 							<li><a href="<?=ROTA_GERAL?>/sermao">Pregações</a></li>
 							<li><a href="<?=ROTA_GERAL?>/home/paginas/sobre">Sobre</a></li>
 							<li><a href="<?=ROTA_GERAL?>/home/paginas/contatos">Contato</a></li>
-							<li><a target="_blank" href="sistema">Login</a></li>
+							<li><a target="_blank" href="<?=ROTA_GERAL?>/sistema">Login</a></li>
 						</ul>
 					</div>
 				</div>

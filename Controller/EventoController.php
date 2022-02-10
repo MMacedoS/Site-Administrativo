@@ -23,6 +23,7 @@ class EventoController extends Controller{
         {
             $HomeModel=new HomeModel();
             $evento=$HomeModel->evento($evento);
+            
             $this->mostrarEvento('evento',$evento);
         }
     public function eventos($limit)

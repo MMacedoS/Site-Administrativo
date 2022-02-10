@@ -1,24 +1,23 @@
 <?php 
-require_once("../conexao.php");
+
 $membrosSede = 0;
 $membrosCadastrados = 0;
 $pastoresCadastrados = 0;
 $igrejasCadastradas = 0;
 
-$query = $pdo->query("SELECT * FROM igrejas");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$res = $this->getIgrejasAll();
 $igrejasCadastradas = @count($res);
 
-$query = $pdo->query("SELECT * FROM pastores");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$res = $this->getPastores();
 $pastoresCadastrados = @count($res);
 
-$query_m = $pdo->query("SELECT * FROM membros where igreja = 3 and ativo = 'Sim'");
-$res_m = $query_m->fetchAll(PDO::FETCH_ASSOC);
+
+$res_m = $this->getIgrejas(3);
 $membrosSede = @count($res_m);
 
-$query_m = $pdo->query("SELECT * FROM membros where ativo = 'Sim'");
-$res_m = $query_m->fetchAll(PDO::FETCH_ASSOC);
+
+$res_m = $this->getMembrosAtivos();
 $membrosCadastrados = @count($res_m);
 
 ?>
@@ -138,8 +137,8 @@ $membrosCadastrados = @count($res_m);
 
 		<?php 
 
-		$query = $pdo->query("SELECT * FROM igrejas order by matriz desc, nome asc");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+		
+		$res = $this->getIgrejasAll();
 		$total_reg = count($res);
 
 		for($i=0; $i < $total_reg; $i++){
@@ -160,13 +159,13 @@ $membrosCadastrados = @count($res_m);
 				$classe = 'text-primary';
 			}
 
-			$query_m = $pdo->query("SELECT * FROM membros where igreja = '$id_ig' and ativo = 'Sim'");
-			$res_m = $query_m->fetchAll(PDO::FETCH_ASSOC);
+			
+			$res_m = $this->getMembrosIgrejaAtivos($id_ig);
 			$membrosCad = @count($res_m);
 
 
-			$query_con = $pdo->query("SELECT * FROM pastores where id = '$pastor'");
-			$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+			
+			$res_con = $this->getPastoresId($pastor);
 			if(count($res_con) > 0){
 				$nome_p = $res_con[0]['nome'];
 			}else{
@@ -185,7 +184,7 @@ $membrosCadastrados = @count($res_m);
 									<div class="text-xs text-secondary subtitulocard"><?php echo mb_strtoupper($nome_p) ?> </div>
 								</div>
 								<div class="col-auto" align="center">
-									<img src="../img/igrejas/<?php echo $imagem ?>" width="50px" height="50px"><br>
+									<img src="<?=ROTA?>/painel-igreja/img/igrejas/<?php echo $imagem ?>" width="50px" height="50px"><br>
 									<span class="text-xs totaiscard <?php echo $classe ?>"><?php echo @$membrosCad ?> MEMBROS</span>
 								</div>
 							</div>

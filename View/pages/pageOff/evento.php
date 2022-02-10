@@ -3,15 +3,17 @@
  require_once './View/componentes/topo.php';
 ?>
 
-<?php if(count($evento)>0)?>
 <div class="container-wrap">
 
         <aside id="fh5co-hero">
 			<div class="flexslider">
 				<ul class="slides">
-                <?php 
+                
+<?php if(@count($evento)>0){ 
+
 					
-					
+					// var_dump($evento);
+                    // die;
                     $titulo = $evento[0]['titulo'];
                     $subtitulo = $evento[0]['subtitulo'];						
                     $data_evento = $evento[0]['data_evento'];
@@ -92,10 +94,14 @@
 				<div class="col-md-12" style="margin-top:25px">
 					<p><?php echo $descricao3 ?></p>
 				</div>
-				<?php } ?>
+				<?php }
+            }else{
+                echo "<br><center><h4>não possui dados!</h4></center>";
+            } ?>
             </div>
 
 </div>
 <?php
+
  require_once './View/componentes/rodape.php';
 ?>

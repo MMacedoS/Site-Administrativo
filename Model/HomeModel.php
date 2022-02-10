@@ -46,7 +46,7 @@ class HomeModel extends Conexao{
     public function evento($titulo)
     {
         $con=Conexao::connect();
-        $query = $con->query("SELECT * FROM eventos where url='$titulo' and ativo = 'Sim' and banner != 'sem-foto.jpg' order by id desc");
+        $query = $con->query("SELECT * FROM eventos where url='$titulo' and ativo = 'Sim' order by id desc");
 		$res = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $res;
 

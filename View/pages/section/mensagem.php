@@ -5,7 +5,13 @@
     <div id="fh5co-intro">
 			<div class="row animate-box">
 				<div class="col-md-12 col-md-offset-0 text-center">
-				<h2>Vivendo na Maravilhosa Graça de Deus!</h2>
+				<div class="col-md-12">
+					<!-- <h3>Versículo Diário</h3> -->
+					<blockquote class="dailyVerse">
+						<div id="dailyVersesWrapper"></div>
+						<script async defer src="https://dailyverses.net/get/verse.js?language=arc"></script>
+					</blockquote>
+				</div>
 						Cultos: 
 				<?php 
 						$res=$this->cultos($this->igrejas[0]['id']);

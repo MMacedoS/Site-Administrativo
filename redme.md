@@ -1,0 +1,1 @@
+atualizar => os arquivos, quando hospedar, remover os Sisigreja do Rota.php, index, e nos arquivos 
