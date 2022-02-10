@@ -1,16 +1,16 @@
 <?php
 @session_start();
+
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'eventos';
 $titulo = $_POST['titulo'];
 $subtitulo = $_POST['subtitulo'];
 $descricao1 = $_POST['descricao1'];
-$descricao2 = $_POST['descricao2'];
-$descricao3 = $_POST['descricao3'];
 $data_evento = $_POST['data_evento'];
 $video = $_POST['video'];
 $tipo = $_POST['tipo'];
 $pregador = $_POST['pregador'];
+$ativo = "Sim";
 
 $id = @$_POST['id'];
 $igreja = $_POST['igreja'];
@@ -75,24 +75,22 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query= $this->insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador);
+	$query= $this->insertEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador);
 	
-}else{
-	
+}else{	
 	$res = $this->getEventos($id);
-	$foto = $res[0]['imagem'];
-	if($foto != "sem-foto.jpg"){
-		@unlink(IMAGEM.'\\img\\eventos\\'.$foto);	
-	}
+		$foto = $res[0]['imagem'];
+		if($foto != "sem-foto.jpg"){
+			@unlink(IMAGEM.'\\img\\eventos\\'.$foto);	
+		}
 
 	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->updateEventos($titulo,$subtitulo,$descricao,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador,$id);
-
+		$query = $this->updateEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,"Sim",$banner,$url,$video,$pregador,$id);
 
 
 	}else{
-
-		$query = $pdo->updateEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id);
+		
+		$query = $this->updateEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id);
 	}
 
 

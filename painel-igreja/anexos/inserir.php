@@ -1,5 +1,5 @@
 <?php
-require_once("../../conexao.php");
+
 @session_start();
 $id_usuario = @$_SESSION['id_usuario'];
 $pagina = 'anexos';
@@ -14,7 +14,7 @@ $id = @$_POST['id'];
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['imagem']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/documentos/' .$nome_img;
+$caminho = IMAGEM.'/img/documentos/' .$nome_img;
 if (@$_FILES['imagem']['name'] == ""){
 	$imagem = "sem-foto.jpg";
 }else{
@@ -33,21 +33,20 @@ if($ext == 'png' or $ext == 'jpg' or $ext == 'JPG' or $ext == 'jpeg' or $ext == 
 
 
 if($id == "" || $id == 0){
-	$query = $pdo->prepare("INSERT INTO $pagina SET nome = :nome, descricao = :descricao,  data = '$data', usuario = '$id_usuario', arquivo = '$imagem', igreja = '$igreja'");
+	$query=$this->insertAnexos($nome,$descricao,$data,$id_usuario,$imagem,$igreja);
 
 }else{
-	if($imagem == "sem-foto.jpg"){
-		$query = $pdo->prepare("UPDATE $pagina SET nome = :nome, descricao = :descricao,  data = '$data', usuario = '$id_usuario' where id = '$id'");
-	}else{
-
-		$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+	$res =  $this->getAnexosId($id);
 		$foto = $res[0]['arquivo'];
 		if($foto != "sem-foto.jpg"){
-			@unlink('../../img/documentos/'.$foto);	
+			@unlink(IMAGEM.'/img/documentos/'.$foto);	
 		}
-
-		$query = $pdo->prepare("UPDATE $pagina SET nome = :nome, descricao = :descricao,  data = '$data', usuario = '$id_usuario', arquivo = '$imagem' where id = '$id'");
+	if($imagem == "sem-foto.jpg"){
+		$query=$this->updateAnexos($nome,$descricao,$data,$id_usuario,$foto,$id);
+	
+	}else{
+		$query=$this->updateAnexos($nome,$descricao,$data,$id_usuario,$imagem,$id);
+	
 	}
 	
 
@@ -55,11 +54,7 @@ if($id == "" || $id == 0){
 
 
 
-	$query->bindValue(":descricao", "$descricao");
-	$query->bindValue(":nome", "$nome");
-	$query->execute();
-
-echo 'Salvo com Sucesso';
+echo $query;
 
 
 ?>

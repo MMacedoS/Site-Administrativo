@@ -2,7 +2,9 @@
 require_once("verificar.php");
 require_once("deslogar-tesoureiro.php");
 $pagina = 'eventos';
+
 ?>
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
 
 <div class="row my-3" style="margin-right:20px">
 	<div class="col-md-2">
@@ -39,10 +41,8 @@ $pagina = 'eventos';
 					foreach ($res[$i] as $key => $value){} 
 
 						$titulo = $res[$i]['titulo'];
-					$subtitulo = $res[$i]['subtitulo'];
-					$descricao1 = $res[$i]['descricao1'];
-					$descricao2 = $res[$i]['descricao2'];
-					$descricao3 = $res[$i]['descricao3'];
+					$subtitulo =  $res[$i]['subtitulo'];
+					$descricao1 = $res[$i]['descricao1'];					
 					$data_cad = $res[$i]['data_cad'];
 					$data_evento = $res[$i]['data_evento'];
 					$usuario = $res[$i]['usuario'];
@@ -95,7 +95,7 @@ $pagina = 'eventos';
 					$data_eventoF = implode('/', array_reverse(explode('-', $data_evento)));
 					
 					?>			
-					<tr class="<?php echo $inativa ?> <?php echo $classe_item ?>">
+					<tr class="<?php echo $inativa ?> ">
 						<td><?php echo $titulo ?></td>
 						<td class="esc"><?php echo $data_eventoF ?></td>
 						<td class="esc"><?php echo $nome_usu_cad ?></td>
@@ -106,20 +106,17 @@ $pagina = 'eventos';
 						
 						<td>
 							<big>
-								<a href="#" onclick="editar('<?=@$id ?>', '<?=@$titulo ?>', '<?=@$subtitulo ?>', '<?=@$descricao1 ?>', '<?=@$descricao2 ?>', '<?=@$descricao3 ?>', '<?=@$data_evento ?>', '<?=@$imagem ?>', '<?=@$video ?>', '<?=@$banner ?>', '<?=@$tipo ?>', '<?=@$pregador ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
+								<a href="#" onclick="editar('<?=@$id ?>')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
 
 								<a href="#" onclick="excluir('<?php echo $id ?>' , '<?php echo $titulo ?>')" title="Excluir Registro">	<i class="bi bi-trash text-danger"></i> </a>
 
-								<a href="#" onclick="dados('<?php echo $titulo ?>', '<?php echo $subtitulo ?>', '<?php echo $descricao1 ?>', '<?php echo $descricao2 ?>', '<?php echo $descricao3 ?>', '<?php echo $data_cadF ?>', '<?php echo $data_eventoF ?>', '<?php echo $nome_usu_cad ?>', '<?php echo $imagem ?>', '<?php echo $video ?>', '<?php echo $ativo ?>', '<?php echo $obs ?>', '<?php echo $tipo ?>')" title="Ver Dados">	<i class="bi bi-info-square-fill text-primary"></i> </a>
+								<a href="#" onclick="dados('<?php echo $id ?>')" title="Ver Dados">	<i class="bi bi-info-square-fill text-primary"></i> </a>
 
 								<a href="#" onclick="obs('<?php echo $id ?>','<?php echo $titulo ?>', '<?php echo $obs ?>')" title="Observações">	<i class="bi bi-chat-right-text <?php echo $classe_obs ?>"></i> </a>
 
-
 								<a href="#" onclick="mudarStatus('<?php echo $id ?>', '<?php echo $ativar ?>')" title="<?php echo $ativo ?>">
 									<i class="bi <?php echo $icone ?> <?php echo $classe ?>"></i></a>
-
-
-								
+							
 
 								</big>
 
@@ -141,7 +138,7 @@ $pagina = 'eventos';
 					<h5 class="modal-title" id="tituloModal"></h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form id="form" method="post">
+				<form id="formEvernto" method="post">
 					<div class="modal-body">
 
 						<div class="row">
@@ -208,10 +205,10 @@ $pagina = 'eventos';
 
 						<div class="mb-3">
 							<label for="exampleFormControlInput1" class="form-label">Primeira Descrição <small><small> (Se ouver) </small></small></label>
-							<textarea type="text" class="form-control" id="descricao1" name="descricao1" ></textarea>
+							<textarea type="text" class="form-control" id="descricao1" ></textarea>
 						</div>
 
-
+<!-- 
 						<div class="mb-3">
 							<label for="exampleFormControlInput1" class="form-label">Segunda Descrição <small><small>(Se ouver) </small></small></label>
 							<textarea type="text" class="form-control" id="descricao2" name="descricao2"></textarea>
@@ -221,7 +218,7 @@ $pagina = 'eventos';
 						<div class="mb-3">
 							<label for="exampleFormControlInput1" class="form-label">Terceira Descrição <small><small>(Se ouver) </small></small></label>
 							<textarea type="text" class="form-control" id="descricao3" name="descricao3" ></textarea>
-						</div>
+						</div> -->
 
 						<div class="row">
 
@@ -233,7 +230,7 @@ $pagina = 'eventos';
 							</div>
 							<div class="col-md-2">
 								<div id="divImg" class="mt-4">
-									<img src="../img/eventos/sem-foto.jpg"  width="100px" id="target">									
+									<img src="<?=ROTA_IGREJA?>/img/eventos/sem-foto.jpg"  width="100px" id="target">									
 								</div>
 							</div>
 
@@ -246,7 +243,7 @@ $pagina = 'eventos';
 							</div>
 							<div class="col-md-2">
 								<div id="divImgBanner" class="mt-4">
-									<img src="../img/eventos/sem-foto.jpg"  width="100px" id="targetBanner">									
+									<img src="<?=ROTA_IGREJA?>img/eventos/sem-foto.jpg"  width="100px" id="targetBanner">									
 								</div>
 							</div>
 
@@ -372,7 +369,6 @@ $pagina = 'eventos';
 
 
 					
-					
 
 				</small>
 				</div>
@@ -433,49 +429,65 @@ $pagina = 'eventos';
 
 		<script type="text/javascript">
 
-			function editar(id, titulo, subtitulo, descricao1, descricao2, descricao3, data_evento, imagem, video, banner, tipo, pregador){
-				$('#id').val(id);
-				$('#titulo').val(titulo);
-				$('#subtitulo').val(subtitulo);
-				$('#descricao1').val(descricao1);
-				$('#descricao2').val(descricao2);
-				$('#descricao3').val(descricao3);
-				$('#data_evento').val(data_evento);
-				$('#video').val(video);
-				$('#pregador').val(pregador);
+			function editar(id){
 
-				$('#tipo').val(tipo).change();
+				$.ajax({
+					url:"<?=ROTA_IGREJA?>Home/getEventosID/"+id,
+					method:"POST",
+					dataType:"json",
+					success: function(res){
+						console.log(res[0]);
+							$('#id').val(id);
+							$('#titulo').val(res[0].titulo);
+							$('#subtitulo').val(res[0].subtitulo);
+							$('#descricao1').val(CKEDITOR.instances.descricao1.setData(res[0].descricao1));
+							// $('#descricao2').val(res[0].descricao2);
+							// $('#descricao3').val(res[0].descricao3);
+							$('#data_evento').val(res[0].data_evento);
+							$('#video').val(res[0].video);
+							$('#pregador').val(res[0].pregador);
 
-				$('#target').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + imagem);
-				$('#targetBanner').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + banner);
+							$('#tipo').val(res[0].tipo).change();
 
-				$('#tituloModal').text('Editar Registro');
-				var myModal = new bootstrap.Modal(document.getElementById('modalForm'), {		});
-				myModal.show();
-				$('#mensagem').text('');
+							$('#target').attr('src', '<?=ROTA_IGREJA?>img/eventos/' + res[0].imagem);
+							$('#targetBanner').attr('src', '<?=ROTA_IGREJA?>img/eventos/' + res[0].banner);
+
+							$('#tituloModal').text('Editar Registro');
+							var myModal = new bootstrap.Modal(document.getElementById('modalForm'), {		});
+							myModal.show();
+							$('#mensagem').text('');
+					}	
+				});
+				// 
 			}
 
 
 
-			function dados(titulo, subtitulo, descricao1, descricao2, descricao3, data_cad, data_evento, usuario, imagem, video, ativo, obs, tipo){
+			function dados(id){
+				$.ajax({
+					url:"<?=ROTA_IGREJA?>Home/getEventosID/"+id,
+					method:"POST",
+					dataType:"json",
+					success: function(res){
+						$('#titulo-dados').text(res[0].titulo);
+						$('#subtitulo-dados').text(res[0].subtitulo);
+						$('#cad-dados').text(res[0].data_cad);
+						$('#evento-dados').text(res[0].data_evento);
+						$('#usu-cad-dados').text(res[0].usuario);
+						$('#ativo-dados').text(res[0].ativo);
+						$('#obs-dados').text(res[0].obs);
+						$('#tipo-dados').text(res[0].tipo);
+						
+						$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + res[0].imagem);
+						$('#video-dados').attr('src', res[0].video);
 
-				
-				$('#titulo-dados').text(titulo);
-				$('#subtitulo-dados').text(subtitulo);
-				$('#cad-dados').text(data_cad);
-				$('#evento-dados').text(data_evento);
-				$('#usu-cad-dados').text(usuario);
-				$('#ativo-dados').text(ativo);
-				$('#obs-dados').text(obs);
-				$('#tipo-dados').text(tipo);
-				
-				$('#foto-dados').attr('src', '<?=ROTA_IGREJA?>/img/eventos/' + imagem);
-				$('#video-dados').attr('src', video);
-
-				var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
-				myModal.show();
-				$('#mensagem').text('');
-			}
+						var myModal = new bootstrap.Modal(document.getElementById('modalDados'), {		});
+						myModal.show();
+						$('#mensagem').text('');
+					}
+				});
+			
+				}
 
 
 
@@ -579,3 +591,53 @@ function carregarImgBanner() {
     }
 
 		</script>
+ <script>
+     CKEDITOR.replace( 'descricao1' );
+
+
+	 
+
+$("#formEvernto").submit(function () {
+	event.preventDefault();
+	var formData = new FormData(this);
+    formData.append('descricao1', CKEDITOR.instances['descricao1'].getData());
+
+	$.ajax({
+		url: pag + "/inserir.php",
+		type: 'POST',
+		data: formData,
+
+		success: function (mensagem) {
+			$('#mensagem').text('');
+			$('#mensagem').removeClass()
+			if (mensagem.trim() == "Salvo com Sucesso") {
+                    //$('#nome').val('');
+                    //$('#cpf').val('');
+                     $('#btn-fechar').click();
+                     mensagemSalvar();
+                     
+                     setTimeout(function(){
+                        // window.location="index.php?pag=" + pag;
+                        // window.location.reload();
+                    }, 500)
+                     
+                    
+                     
+                } else {
+
+                	$('#mensagem').addClass('text-danger')
+                	$('#mensagem').text(mensagem)
+                }
+
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+            
+        });
+
+});
+
+ </script>

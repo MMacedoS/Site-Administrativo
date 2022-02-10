@@ -512,9 +512,15 @@ public function eventos($page)
         }
 
 
-    public function insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
+    public function insertEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
     {
-        return $this->conCadastro->insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador);
+        return $this->conCadastro->insertEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador);
+        
+    }
+    
+    public function updateEventos($titulo,$subtitulo,$descricao,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id)
+    {
+        return $this->conCadastro->updateEventos($titulo,$subtitulo,$descricao,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id);
         
     }
     // ////////////////////////////////////pagar ////////////
@@ -816,6 +822,46 @@ public function updateDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igre
 public function deleteDocumentos($dados)
 {
     return $this->conCadastro->deleteDocumentos($dados);
+}
+// ///////////////////////////////////////
+//  documentos//////////////////////////
+
+public function getAnexosId($dados)
+{
+    return $this->conCadastro->getAnexosId($dados);
+}
+
+public function anexos($page)
+{
+    // echo $page;die;
+    switch ($page) {
+        case 'inserir.php':
+            require_once "anexos/inserir.php";
+            // echo "inserir atualizar";
+            break;
+            case 'excluir.php':
+                require_once "anexos/excluir.php";
+                break;
+                
+                                
+        default:
+            # code...
+            break;
+    }
+
+}
+public function insertAnexos($nome,$descricao,$data,$id_usuario,$imagem,$igreja)	
+{
+    return $this->conCadastro->insertAnexos($nome,$descricao,$data,$id_usuario,$imagem,$igreja);
+}
+public function updateAnexos($nome,$descricao,$data,$id_usuario,$imagem,$id)
+{
+    return $this->conCadastro->updateAnexos($nome,$descricao,$data,$id_usuario,$imagem,$id);
+}
+
+public function deleteAnexos($dados)
+{
+    return $this->conCadastro->deleteAnexos($dados);
 }
 //////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////

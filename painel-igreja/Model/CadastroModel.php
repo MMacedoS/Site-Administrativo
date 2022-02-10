@@ -723,17 +723,14 @@ public function updateStatusAlertas($dados,$id)
 // //////////////////////////////////////////////////
 /////////////////////////////////eventos ///////////////
 
-public function insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descricao3,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
+public function insertEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador)
 {
-    $query = $this->instancia->prepare("INSERT INTO eventos SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, descricao2 = :descricao2, 
-	descricao3 = :descricao3, data_evento = :data_evento, usuario = :id_usuario, video = :video, ativo = :ativo,
+    $query = $this->instancia->prepare("INSERT INTO eventos SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, data_evento = :data_evento, usuario = :id_usuario, video = :video, ativo = :ativo,
 	 igreja = :igreja, imagem = :imagem, tipo = :tipo, banner = :banner, url = :url, pregador = :pregador");
 
     $query->bindValue(":titulo", $titulo);
     $query->bindValue(":subtitulo", $subtitulo);
     $query->bindValue(":descricao1", $descricao1);
-    $query->bindValue(":descricao2", $descricao2);
-    $query->bindValue(":descricao3", $descricao3);
     $query->bindValue(":data_evento", $data_evento);
     $query->bindValue(":id_usuario", $id_usuario);
     $query->bindValue(":igreja", $igreja);
@@ -745,11 +742,41 @@ public function insertEventos($titulo,$subtitulo,$descricao1,$descricao2,$descri
     $query->bindValue(":video", $video);
     $query->bindValue(":pregador", $pregador);
     if($query->execute()){
-        echo 'Alterado com Sucesso';
+        echo 'Salvo com Sucesso';
     }else
     {
         echo 'erro';
     }
+    
+}
+
+public function updateEventos($titulo,$subtitulo,$descricao1,$data_evento,$id_usuario,$igreja,$imagem,$tipo,$ativo,$banner,$url,$video,$pregador,$id)
+{
+   
+    $query = $this->instancia->prepare("UPDATE eventos SET titulo = :titulo, subtitulo = :subtitulo, descricao1 = :descricao1, data_evento = :data_evento, usuario = :id_usuario, video = :video, ativo = :ativo,
+	 igreja = :igreja, imagem = :imagem, tipo = :tipo, banner = :banner, url = :url, pregador = :pregador WHERE id=:id");
+
+    $query->bindValue(":titulo", $titulo);
+    $query->bindValue(":subtitulo", $subtitulo);
+    $query->bindValue(":descricao1", $descricao1);
+    $query->bindValue(":data_evento", $data_evento);
+    $query->bindValue(":id_usuario", $id_usuario);
+    $query->bindValue(":igreja", $igreja);
+    $query->bindValue(":imagem", $imagem);
+    $query->bindValue(":tipo", $tipo);
+    $query->bindValue(":ativo", $ativo);
+    $query->bindValue(":banner", $banner);
+    $query->bindValue(":url", $url);
+    $query->bindValue(":video", $video);
+    $query->bindValue(":pregador", $pregador);
+    $query->bindValue(":id", $id);
+    if($query->execute()){
+        echo 'Salvo com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+    
     
 }
 
@@ -1223,6 +1250,66 @@ public function updateDocumento($nome,$descricao,$data,$id_usuario,$imagem,$igre
 public function deleteDocumentos($dados)
 {
     $query = $this->instancia->prepare("DELETE FROM documentos where id = :id");
+    $query->bindValue(":id",$dados,PDO::PARAM_INT);
+    if($query->execute()){
+        echo 'Excluído com Sucesso';
+    }else
+    {
+        echo 'erro';
+    }
+}
+///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+public function getAnexosId($dados)
+    {    
+        $query = $this->instancia->query("SELECT * FROM anexos where id = '$dados'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+public function insertAnexos($nome,$descricao,$data,$id_usuario,$imagem,$igreja)
+{
+    $query =$this->instancia->prepare("INSERT INTO anexos SET nome = :nome, descricao = :descricao,  
+	data = :data, usuario = :usuario, arquivo = :arquivo, igreja =:igreja");
+     $query->bindValue(":descricao",$descricao);
+     $query->bindValue(":nome",$nome);
+     $query->bindValue(":usuario",$id_usuario);
+     $query->bindValue(":igreja",$igreja);
+     $query->bindValue(":data",$data);
+     $query->bindValue(":arquivo",$imagem);
+     if($query->execute())
+     {
+         return 'Salvo com Sucesso';
+     }else
+     {
+     return 'erro';
+     }
+}
+public function updateAnexos($nome,$descricao,$data,$id_usuario,$imagem,$id)
+{
+    $query = $this->instancia->prepare("UPDATE anexos SET nome = :nome, descricao = :descricao,  
+	data = :data, usuario = :usuario, arquivo = :arquivo WHERE id = :id");
+     $query->bindValue(":descricao",$descricao);
+     $query->bindValue(":nome",$nome);
+     $query->bindValue(":usuario",$id_usuario);
+     $query->bindValue(":data",$data);
+     $query->bindValue(":arquivo",$imagem);
+     $query->bindValue(":id",$id);
+     if($query->execute())
+     {
+         return 'Salvo com Sucesso';
+     }else
+     {
+     return 'erro';
+     }
+}
+
+
+public function deleteAnexos($dados)
+{
+    $query = $this->instancia->prepare("DELETE FROM anexos where id = :id");
     $query->bindValue(":id",$dados,PDO::PARAM_INT);
     if($query->execute()){
         echo 'Excluído com Sucesso';

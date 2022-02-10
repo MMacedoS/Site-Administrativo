@@ -1,18 +1,17 @@
 <?php
-require_once("../../conexao.php");
 $pagina = 'anexos';
 $id = @$_POST['id-excluir'];
 
 //excluir a imagem
-$query = $pdo->query("SELECT * FROM $pagina where id = '$id'");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$res = $this->getAnexosId($id);
 $foto = $res[0]['arquivo'];
 if($foto != "sem-foto.jpg"){
-	@unlink('../../img/documentos/'.$foto);	
+	@unlink(IMAGEM.'/img/documentos/'.$foto);	
 }
 
 
-$query = $pdo->query("DELETE FROM $pagina where id = '$id'");
+$query = $this->deleteAnexos($id);
 
-echo 'Excluído com Sucesso';
+echo $query;
 ?>

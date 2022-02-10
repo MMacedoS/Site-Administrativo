@@ -7,8 +7,7 @@ class HomeController extends Controller{
        
     }
     public function index($igreja)
-    {
-        
+    {        
         $this->igrejas=$this->conHome->getIgrejasAll(3);       
         $this->mostrarIndex('index');
     }
@@ -139,6 +138,26 @@ class HomeController extends Controller{
     {
         return $this->conHome->getEventos($id);
     }
+    public function getEventosID($id)
+    {
+
+        echo json_encode($this->conHome->getEventosID($id));
+    }
+    // public function jsonSerialize($object)
+    // {
+    //         return [
+    //             'id' =>$object->getIdMovimento(),
+    //             'titulo' =>$object->getIdCaixa(),
+    //             'subtitulo' =>$object->getIdBico(),
+    //             'descricao1' =>$this->invertedata($object->getDataMovimento()),
+    //             'descricao2' =>$object->getQtdoFechado(),
+    //             'descricao3' =>$object->getQtdoAberto(),
+    //             'data_cad' =>$object->getNomeBico(),
+    //             'data_evento' =>$object->getNomeProduto(),
+    //             'usuario' =>$object->getValorProduto(),
+    //             'imagem' =>$this->somarQtdo($object->getQtdoFechado(),$object->getQtdoAberto())
+    //         ];
+    // }
     public function getFornecedoresId($id)
     {
         return $this->conHome->getFornecedoresId($id);
@@ -223,6 +242,10 @@ class HomeController extends Controller{
     public function getGruposMembrosId($igreja,$id_reg,$celula)
     {
         return $this->conHome->getGruposMembrosId($igreja,$id_reg,$celula);
+    }
+    public function getAnexos($igreja)
+    {
+        return $this->conHome->getAnexos($igreja);
     }
 }
 ?>

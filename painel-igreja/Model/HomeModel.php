@@ -31,8 +31,7 @@ class HomeModel extends Conexao
     }
 
     public function getConfig()
-    {
-       
+    {       
         $query = $this->igreja->query("SELECT * FROM config");
         return $res = $query->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -275,7 +274,13 @@ class HomeModel extends Conexao
         $query = $this->igreja->query("SELECT * FROM movimentacoes where igreja = '$id_igreja' order by id desc");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    public function getEventosID($id)
+    {
+        $query = $this->igreja->query("SELECT * FROM eventos where id = '$id'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
     public function getDocumentos($id_igreja)
     {
         $query = $this->igreja->query("SELECT * FROM documentos where igreja = '$id_igreja' order by id desc");	
@@ -295,6 +300,12 @@ class HomeModel extends Conexao
     public function getGruposMembrosId($igreja,$id_reg,$celula)
     {
         $query=$this->igreja->query("SELECT * FROM grupos_membros where igreja = '$igreja' and membro = '$id_reg' and grupo = '$celula'");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAnexos($igreja)
+    {
+        $query=$this->igreja->query("SELECT * FROM anexos where igreja = '$igreja' order by id desc");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
